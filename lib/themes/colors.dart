@@ -19,4 +19,6 @@ class LightTheme {
   static const Color bgColour = Color(0xFFFFFFFF);
   static const Color mainColour = Color(0xFFF06292);
   static const Color subColour = Color(0xFF000000);
+  static const Color accentColor = Color(0xFFF8BBD0);
+
 }
