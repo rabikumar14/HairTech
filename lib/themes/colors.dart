@@ -5,6 +5,10 @@ import 'package:flutter/material.dart';
 black = Color(0xFF000000)
 white = Color(0xFFFFFFFF)
 blue = Color(0xFF448AFF)
+purple = Color(0xFF7C4DFF)
+pink = Color(0xFFC2185B)
+orange = Color(0xFFE65100)
+yellow = Color(0xFFF9A825)
 */
 
 class DarkTheme {
@@ -20,5 +24,4 @@ class LightTheme {
   static const Color mainColour = Color(0xFFF06292);
   static const Color subColour = Color(0xFF000000);
   static const Color accentColor = Color(0xFFF8BBD0);
-
 }

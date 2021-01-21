@@ -1,8 +1,9 @@
-import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:hair_salon/themes/colors.dart';
 import 'package:hair_salon/widgets/product_tile.dart';
 import 'package:hair_salon/pages/products_page.dart';
+import 'package:hair_salon/pages/setting.dart';
+import 'package:hair_salon/themes/bot_nav_settings.dart';
 
 class BotNavBar extends StatefulWidget {
   @override
@@ -28,9 +29,7 @@ class _BotNavBarState extends State<BotNavBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       backgroundColor: Colors.white,
-     
       body: PageView(
         physics: NeverScrollableScrollPhysics(),
         controller: _pageController,
@@ -42,12 +41,11 @@ class _BotNavBarState extends State<BotNavBar> {
           ProductsPage(),
           Scaffold(
               body: Container(height: 200, width: 200, child: ProductWidget())),
-          Scaffold(
-              body: Container(height: 200, width: 200, child: ProductWidget())),
+          Settings(),
         ],
       ),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(7),
         child: BottomNavyBar(
           backgroundColor: LightTheme.bgColour,
           selectedIndex: currentIndex,
