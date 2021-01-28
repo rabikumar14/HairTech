@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hair_salon/pages/account.dart';
+import 'package:hair_salon/pages/temp_test.dart';
 import 'package:hair_salon/themes/colors.dart';
 import 'package:hair_salon/widgets/product_tile.dart';
 import 'package:hair_salon/pages/products_page.dart';
@@ -41,7 +43,7 @@ class _BotNavBarState extends State<BotNavBar> {
           ProductsPage(),
           Scaffold(
               body: Container(height: 200, width: 200, child: ProductWidget())),
-          Settings(),
+          Account(),
         ],
       ),
       bottomNavigationBar: Padding(

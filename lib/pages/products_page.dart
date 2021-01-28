@@ -15,7 +15,7 @@ class _ProductsPageState extends State<ProductsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: LightTheme.bgColour,
       appBar: _buildAppBar(),
       body: DefaultTabController(
         length: 4,
@@ -69,35 +69,30 @@ class _ProductsPageState extends State<ProductsPage> {
 
   _buildAppBar() {
     return AppBar(
-      backgroundColor: LightTheme.mainColour,
+      backgroundColor: LightTheme.bgColour,
+      iconTheme: IconThemeData(color: LightTheme.mainColour),
       centerTitle: true,
       title: Text(
-        'Our Products',
+        'Products',
         style: GoogleFonts.varelaRound(
-          color: Colors.white,
+          color: LightTheme.mainColour,
           fontWeight: FontWeight.w600,
         ),
       ),
       actions: <Widget>[
         Padding(
-          padding: const EdgeInsets.all(2.0),
-          child: Center(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: Card(
-                elevation: 5,
-                child: IconButton(
-                  onPressed: () {
-
-                    Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => CartPage()));
-                  },
-                  icon: Icon(
-                    Icons.shopping_cart,
-                    size: 22,
-                    color: LightTheme.mainColour,
-                  ),
-                ),
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: Card(
+            elevation: 5,
+            child: IconButton(
+              onPressed: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => CartPage()));
+              },
+              icon: Icon(
+                Icons.shopping_cart,
+                size: 22,
+                color: LightTheme.mainColour,
               ),
             ),
           ),

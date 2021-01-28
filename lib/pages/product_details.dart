@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../themes/colors.dart';
-import '../themes/colors.dart';
 
 class ProductDetails extends StatefulWidget {
   const ProductDetails({Key key}) : super(key: key);
@@ -32,12 +31,13 @@ class _ProductDetailsState extends State<ProductDetails> {
 
   _buildAppBar() {
     return AppBar(
-      backgroundColor: LightTheme.mainColour,
+      backgroundColor: LightTheme.bgColour,
+      iconTheme: IconThemeData(color: LightTheme.mainColour),
       centerTitle: true,
       title: Text(
         'Product Details',
         style: GoogleFonts.varelaRound(
-          color: Colors.white,
+          color: LightTheme.mainColour,
           fontWeight: FontWeight.w600,
         ),
       ),
@@ -178,10 +178,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                   color: Colors.white,
                 ),
               ),
-              Text("Add to Cart",style: GoogleFonts.varelaRound(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 18,))
+              Text("Add to Cart",
+                  style: GoogleFonts.varelaRound(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 18,
+                  ))
             ],
           )),
     );

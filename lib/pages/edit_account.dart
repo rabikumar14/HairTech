@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hair_salon/themes/colors.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class EditAccount extends StatefulWidget {
   @override
@@ -7,61 +8,84 @@ class EditAccount extends StatefulWidget {
 }
 
 class _EditAccountState extends State<EditAccount> {
-  double elevationValue = 5;
-  String languageValue = 'English';
-  String themeValue = 'General';
-
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: EdgeInsets.all(25),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Account',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: LightTheme.bgColour,
+        iconTheme: IconThemeData(color: LightTheme.mainColour),
+        centerTitle: true,
+        title: Text(
+          'Edit Account',
+          style: GoogleFonts.varelaRound(
+            color: LightTheme.mainColour,
+            fontWeight: FontWeight.w600,
           ),
-          Card(
-            elevation: elevationValue,
-            margin: EdgeInsets.fromLTRB(0, 10, 0, 30),
-            child: Column(
-              children: [
-                ListTile(
-                  leading: Icon(
-                    Icons.email,
+        ),
+      ),
+      body: SingleChildScrollView(
+        padding: EdgeInsets.all(15),
+        child: Column(
+          children: [
+            Card(
+              shadowColor: Colors.grey[300],
+              elevation: 10,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20)),
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Colors.grey[200],
+                      Colors.white,
+                    ],
+                    stops: [0.1, 1],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
                   ),
-                  title: Text("Change Email"),
-                  onTap: () {},
+                  borderRadius: BorderRadius.circular(20),
                 ),
-                Divider(),
-                ListTile(
-                  leading: Icon(
-                    Icons.lock_outline,
-                  ),
-                  title: Text("Change Password"),
-                  onTap: () {},
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    ListTile(
+                      leading: Icon(
+                        Icons.email,
+                      ),
+                      title: Text("Change Email"),
+                      onTap: () {},
+                    ),
+                    Divider(),
+                    ListTile(
+                      leading: Icon(
+                        Icons.lock_outline,
+                      ),
+                      title: Text("Change Password"),
+                      onTap: () {},
+                    ),
+                    Divider(),
+                    ListTile(
+                      leading: Icon(
+                        Icons.phone,
+                      ),
+                      title: Text("Change Phone Number"),
+                      onTap: () {},
+                    ),
+                    Divider(),
+                    ListTile(
+                      leading: Icon(
+                        Icons.home,
+                      ),
+                      title: Text("Change Address"),
+                      onTap: () {},
+                    ),
+                  ],
                 ),
-                Divider(),
-                ListTile(
-                  leading: Icon(
-                    Icons.phone,
-                  ),
-                  title: Text("Change Phone Number"),
-                  onTap: () {},
-                ),
-                Divider(),
-                ListTile(
-                  leading: Icon(
-                    Icons.home,
-                  ),
-                  title: Text("Change Address"),
-                  onTap: () {},
-                ),
-              ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
