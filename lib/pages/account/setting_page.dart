@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:hair_salon/themes/colors.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:hair_salon/global_items/package_export.dart';
+import 'package:hair_salon/pages/theme/theme_export.dart';
 
 class Settings extends StatefulWidget {
   @override
@@ -15,13 +14,13 @@ class _SettingsState extends State<Settings> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: LightTheme.bgColour,
-        iconTheme: IconThemeData(color: LightTheme.mainColour),
+        backgroundColor: Theme.of(context).backgroundColor,
+        iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         centerTitle: true,
         title: Text(
           'Settings',
           style: GoogleFonts.varelaRound(
-            color: LightTheme.mainColour,
+            color: Theme.of(context).primaryColor,
             fontWeight: FontWeight.w600,
           ),
         ),
@@ -88,22 +87,11 @@ class _SettingsState extends State<Settings> {
                         Icons.colorize,
                       ),
                       title: Text("Colour Theme"),
-                      trailing: DropdownButton(
-                        value: themeValue,
-                        onChanged: (String newThemeValue) {
-                          setState(() {
-                            themeValue = newThemeValue;
-                          });
-                        },
-                        items: <String>['Light', 'Dark', 'Colourblind']
-                            .map<DropdownMenuItem<String>>((String themeValue) {
-                          return DropdownMenuItem<String>(
-                            value: themeValue,
-                            child: Text(themeValue),
-                          );
-                        }).toList(),
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => ThemeSetting()),
                       ),
-                    ),
+                    )
                   ],
                 ),
               ),

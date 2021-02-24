@@ -1,11 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:hair_salon/pages/account.dart';
-import 'package:hair_salon/pages/temp_test.dart';
-import 'package:hair_salon/themes/colors.dart';
-import 'package:hair_salon/widgets/product_tile.dart';
-import 'package:hair_salon/pages/products_page.dart';
-import 'package:hair_salon/pages/setting.dart';
-import 'package:hair_salon/themes/bot_nav_settings.dart';
+import 'package:hair_salon/global_items/font.dart';
+import 'package:hair_salon/global_items/nav_bar/bot_nav_settings.dart';
+import 'package:hair_salon/global_items/package_export.dart';
+import 'package:hair_salon/pages/page_export.dart';
+import 'file:///C:/src/Flutter%20Projects/HairTech/hair_salon/lib/pages/product/widget/product_tile.dart';
 
 class BotNavBar extends StatefulWidget {
   @override
@@ -31,7 +28,7 @@ class _BotNavBarState extends State<BotNavBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).backgroundColor,
       body: PageView(
         physics: NeverScrollableScrollPhysics(),
         controller: _pageController,
@@ -39,19 +36,20 @@ class _BotNavBarState extends State<BotNavBar> {
           setState(() => currentIndex = index);
         },
         children: <Widget>[
-          ProductsPage(),
-          ProductsPage(),
+          ProductPage(),
+          ProductPage(),
           Scaffold(
               body: Container(height: 200, width: 200, child: ProductWidget())),
-          Account(),
+          ThemeSetting(),
+          //todo uncomment once other pages settled
         ],
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(7),
         child: BottomNavyBar(
-          backgroundColor: LightTheme.bgColour,
+          backgroundColor: Theme.of(context).backgroundColor,
           selectedIndex: currentIndex,
-          showElevation: false,
+          showElevation: true,
           itemCornerRadius: 24,
           curve: Curves.easeIn,
           onItemSelected: (index) {
@@ -61,27 +59,27 @@ class _BotNavBarState extends State<BotNavBar> {
           items: <BottomNavyBarItem>[
             BottomNavyBarItem(
                 icon: Icon(Icons.home_outlined),
-                title: Text('Home'),
-                activeColor: LightTheme.mainColour,
-                inactiveColor: LightTheme.subColour,
+                title: textFont('Home', Theme.of(context).primaryColor),
+                activeColor: Theme.of(context).primaryColor,
+                inactiveColor: Theme.of(context).accentColor,
                 textAlign: TextAlign.center),
             BottomNavyBarItem(
                 icon: Icon(Icons.shopping_bag_outlined),
-                title: Text('Products'),
-                activeColor: LightTheme.mainColour,
-                inactiveColor: LightTheme.subColour,
+                title: textFont('Product', Theme.of(context).primaryColor),
+                activeColor: Theme.of(context).primaryColor,
+                inactiveColor: Theme.of(context).accentColor,
                 textAlign: TextAlign.center),
             BottomNavyBarItem(
                 icon: Icon(Icons.account_balance_wallet_outlined),
-                title: Text('Appointment'),
-                activeColor: LightTheme.mainColour,
-                inactiveColor: LightTheme.subColour,
+                title: textFont('Appointment', Theme.of(context).primaryColor),
+                activeColor: Theme.of(context).primaryColor,
+                inactiveColor: Theme.of(context).accentColor,
                 textAlign: TextAlign.center),
             BottomNavyBarItem(
                 icon: Icon(Icons.person_outline),
-                title: Text('Account'),
-                activeColor: LightTheme.mainColour,
-                inactiveColor: LightTheme.subColour,
+                title: textFont('Account', Theme.of(context).primaryColor),
+                activeColor: Theme.of(context).primaryColor,
+                inactiveColor: Theme.of(context).accentColor,
                 textAlign: TextAlign.center),
           ],
         ),

@@ -1,9 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:hair_salon/widgets/cart_item.dart';
-
-import '../themes/colors.dart';
-import '../themes/colors.dart';
+import 'package:hair_salon/global_items/package_export.dart';
+import 'package:hair_salon/pages/cart/cart_item.dart';
 
 class CartPage extends StatefulWidget {
   @override
@@ -19,7 +15,7 @@ class _CartPageState extends State<CartPage> {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 30),
         child: SingleChildScrollView(
-                  child: Column(
+          child: Column(
             children: [
               CartItem(),
               CartItem(),
@@ -40,15 +36,16 @@ class _CartPageState extends State<CartPage> {
                 ),
               ),
               FlatButton(
-                  color: LightTheme.mainColour,
+                  color: Theme.of(context).primaryColor,
                   onPressed: () {},
                   child: Text(
                     'Change Delivery Address',
                     style: TextStyle(color: Colors.white),
                   )),
-
-              SizedBox(height: 20,),
-                   Center(
+              SizedBox(
+                height: 20,
+              ),
+              Center(
                 child: Text(
                   '**** **** **** 4564',
                   style: GoogleFonts.varelaRound(
@@ -59,7 +56,7 @@ class _CartPageState extends State<CartPage> {
                 ),
               ),
               FlatButton(
-                  color: LightTheme.mainColour,
+                  color: Theme.of(context).primaryColor,
                   onPressed: () {},
                   child: Text(
                     'Change Payment Method',
@@ -91,7 +88,7 @@ class _CartPageState extends State<CartPage> {
                       Column(
                         children: [
                           FlatButton(
-                              color: LightTheme.mainColour,
+                              color: Theme.of(context).primaryColor,
                               onPressed: () {},
                               child: Padding(
                                 padding: EdgeInsets.symmetric(
@@ -135,7 +132,7 @@ class _CartPageState extends State<CartPage> {
 
   _buildAppBar() {
     return AppBar(
-      backgroundColor: LightTheme.mainColour,
+      backgroundColor: Theme.of(context).primaryColor,
       centerTitle: true,
       title: Text(
         'Your Cart',

@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:hair_salon/global_items/font.dart';
+import 'package:hair_salon/global_items/package_export.dart';
 
 class CartItem extends StatelessWidget {
   const CartItem({Key key}) : super(key: key);
@@ -28,16 +28,8 @@ class CartItem extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(
-                  "Nivia Men Shampoo",
-                  overflow: TextOverflow.ellipsis,
-                  style: GoogleFonts.varelaRound(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14,
-                  ),
-                  maxLines: 3,
-                ),
+                textFont('Nivia Men Shampoo', Theme.of(context).primaryColor,
+                    fontWeight: FontWeight.bold, fontSize: 14, maxLines: 3),
                 Row(
                   children: <Widget>[
                     Text('Conditioner',

@@ -1,34 +1,40 @@
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:hair_salon/pages/cart_page.dart';
-import 'package:hair_salon/widgets/product_tile.dart';
-import '../themes/colors.dart';
+import 'package:hair_salon/global_items/package_export.dart';
+import 'package:hair_salon/global_items/widget_export.dart';
+import 'package:hair_salon/pages/cart/cart_page.dart';
+import 'file:///C:/src/Flutter%20Projects/HairTech/hair_salon/lib/pages/product/widget/product_tile.dart';
 
-class ProductsPage extends StatefulWidget {
-  ProductsPage({Key key}) : super(key: key);
+class ProductPage extends StatefulWidget {
+  ProductPage({Key key}) : super(key: key);
 
   @override
-  _ProductsPageState createState() => _ProductsPageState();
+  _ProductPageState createState() => _ProductPageState();
 }
 
-class _ProductsPageState extends State<ProductsPage> {
+class _ProductPageState extends State<ProductPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: LightTheme.bgColour,
-      appBar: _buildAppBar(),
+      backgroundColor: Theme.of(context).backgroundColor,
+      appBar: GlobalAppBar('Products',
+          action: AppBarAction(
+            Icons.shopping_cart,
+            route: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => CartPage()));
+            },
+          )),
       body: DefaultTabController(
         length: 4,
         child: Column(
           children: <Widget>[
             TabBar(
-              labelColor: LightTheme.mainColour,
+              labelColor: Theme.of(context).primaryColor,
               unselectedLabelColor: Colors.grey,
-              labelStyle: GoogleFonts.varelaRound(fontWeight: FontWeight.w600),
+              labelStyle: customFont,
               isScrollable: true,
               indicator: UnderlineTabIndicator(
                   borderSide: BorderSide(
-                    color: LightTheme.mainColour,
+                    color: Theme.of(context).primaryColor,
                     width: 2,
                   ),
                   insets: EdgeInsets.symmetric(horizontal: 45)),
@@ -64,40 +70,6 @@ class _ProductsPageState extends State<ProductsPage> {
           ],
         ),
       ),
-    );
-  }
-
-  _buildAppBar() {
-    return AppBar(
-      backgroundColor: LightTheme.bgColour,
-      iconTheme: IconThemeData(color: LightTheme.mainColour),
-      centerTitle: true,
-      title: Text(
-        'Products',
-        style: GoogleFonts.varelaRound(
-          color: LightTheme.mainColour,
-          fontWeight: FontWeight.w600,
-        ),
-      ),
-      actions: <Widget>[
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8),
-          child: Card(
-            elevation: 5,
-            child: IconButton(
-              onPressed: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) => CartPage()));
-              },
-              icon: Icon(
-                Icons.shopping_cart,
-                size: 22,
-                color: LightTheme.mainColour,
-              ),
-            ),
-          ),
-        )
-      ],
     );
   }
 

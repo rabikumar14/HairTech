@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:hair_salon/themes/colors.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:hair_salon/global_items/package_export.dart';
 
 class EditAccount extends StatefulWidget {
   @override
@@ -12,13 +10,13 @@ class _EditAccountState extends State<EditAccount> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: LightTheme.bgColour,
-        iconTheme: IconThemeData(color: LightTheme.mainColour),
+        backgroundColor: Theme.of(context).backgroundColor,
+        iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         centerTitle: true,
         title: Text(
           'Edit Account',
           style: GoogleFonts.varelaRound(
-            color: LightTheme.mainColour,
+            color: Theme.of(context).primaryColor,
             fontWeight: FontWeight.w600,
           ),
         ),
