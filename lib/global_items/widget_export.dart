@@ -4,3 +4,4 @@ export 'nav_bar/bot_nav_bar.dart';
 export 'fancy_card.dart';
 export 'font.dart';
 export 'custom_Divider.dart';
+export 'cart_counter.dart';

@@ -45,6 +45,7 @@ class _CartCounterState extends State<CartCounter> {
       height: 32,
       child: OutlinedButton(
         style: OutlinedButton.styleFrom(
+          elevation: 5,
           backgroundColor: Theme.of(context).canvasColor,
           primary: Theme.of(context).primaryColor,
           padding: EdgeInsets.zero,
