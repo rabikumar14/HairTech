@@ -4,7 +4,6 @@ import 'package:hair_salon/global_items/package_export.dart';
 import 'package:hair_salon/pages/appointment/appt_page.dart';
 import 'package:hair_salon/pages/home/homepage.dart';
 import 'package:hair_salon/pages/page_export.dart';
-import 'package:hair_salon/pages/product/widget/product_tile.dart';
 
 class BotNavBar extends StatefulWidget {
   @override

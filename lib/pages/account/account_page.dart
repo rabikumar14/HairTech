@@ -1,7 +1,7 @@
 import 'package:hair_salon/global_items/package_export.dart';
 import 'package:hair_salon/global_items/widget_export.dart';
-import 'package:hair_salon/pages/account/widget/profile_card.dart';
 
+import 'package:hair_salon/pages/account/widget/profile_card.dart';
 
 class Account extends StatefulWidget {
   @override
