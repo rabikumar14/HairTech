@@ -1,7 +1,8 @@
 import 'package:hair_salon/global_items/package_export.dart';
 import 'package:hair_salon/global_items/widget_export.dart';
 import 'package:hair_salon/pages/cart/cart_page.dart';
-import 'file:///C:/src/Flutter%20Projects/HairTech/hair_salon/lib/pages/product/widget/product_tile.dart';
+import 'package:hair_salon/pages/product/widget/product_tile.dart';
+
 
 class ProductPage extends StatefulWidget {
   ProductPage({Key key}) : super(key: key);
@@ -15,7 +16,7 @@ class _ProductPageState extends State<ProductPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
-      appBar: GlobalAppBar('Products',
+      appBar: GlobalAppBar('',
           action: AppBarAction(
             Icons.shopping_cart,
             route: () {

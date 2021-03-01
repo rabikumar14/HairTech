@@ -4,7 +4,7 @@ import 'package:hair_salon/global_items/package_export.dart';
 final pink = Colors.pinkAccent;
 final black = Colors.black;
 //Card Gradient Light Theme
-final lightGrey = Colors.grey[300];
+final lightGrey = Colors.grey[100];
 final white = Colors.white;
 //Card Gradient Dark Theme
 final grey = Colors.grey[500];
@@ -16,6 +16,7 @@ final lightThemePink = ThemeData(
     primaryColor: pink,
     //Inactive/Other Colour
     accentColor: black,
+    hintColor: darkGrey,
     //Card Gradient Colour
     canvasColor: lightGrey,
     cardColor: white,

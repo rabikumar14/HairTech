@@ -32,11 +32,11 @@ class ProductWidget extends StatelessWidget {
                   ),
                   textFont(
                     'Nivia Men Shampoo',
-                    Theme.of(context).primaryColor,
+                    Theme.of(context).hintColor,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 3,
                   ),
-                  CustomDivider(),
+              
                   textFont(
                     '\$' + '25.99',
                     Theme.of(context).accentColor,

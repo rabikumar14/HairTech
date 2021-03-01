@@ -1,4 +1,6 @@
+import 'package:hair_salon/global_items/app_bar/app_bar_action.dart';
 import 'package:hair_salon/global_items/package_export.dart';
+import 'package:hair_salon/global_items/widget_export.dart';
 import 'package:intl/intl.dart';
 
 class BookPage extends StatefulWidget {
@@ -35,7 +37,7 @@ class _BookPageState extends State<BookPage> {
     //buttonTime
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: _buildAppBar(),
+  
       body: Container(
         width: screenWidth,
         height: screenHeight,
@@ -55,7 +57,20 @@ class _BookPageState extends State<BookPage> {
                   ),
                 ),
               ),
-              Container(height: 315, child: _buildTimeSlots()),
+
+
+ConstrainedBox(
+  constraints: new BoxConstraints(
+    minHeight: 200.0,
+   minWidth: 200.0,
+    maxHeight: 500.0,
+    maxWidth: 500.0
+   
+  ),
+  child: _buildTimeSlots(),
+),
+                 
+   
               SizedBox(height: 10),
               Text(
                 'Available Hair Stylists',
@@ -87,19 +102,6 @@ class _BookPageState extends State<BookPage> {
     );
   }
 
-  _buildAppBar() {
-    return AppBar(
-      backgroundColor: Theme.of(context).backgroundColor,
-      centerTitle: true,
-      title: Text(
-        'Book Appointment',
-        style: GoogleFonts.varelaRound(
-          color: Colors.white,
-          fontWeight: FontWeight.w600,
-        ),
-      ),
-    );
-  }
 
   ///simple stateful date picker
   Widget datePicker() {

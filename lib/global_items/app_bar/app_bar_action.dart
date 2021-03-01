@@ -11,8 +11,8 @@ class AppBarAction extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Card(
-        elevation: 7,
-        shadowColor: Theme.of(context).primaryColor,
+        elevation: 2,
+
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7)),
         child: Container(
           child: IconButton(
