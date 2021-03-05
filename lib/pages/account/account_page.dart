@@ -1,7 +1,8 @@
 import 'package:hair_salon/global_items/package_export.dart';
 import 'package:hair_salon/global_items/widget_export.dart';
-
+import 'package:hair_salon/pages/account/widget/history_card.dart';
 import 'package:hair_salon/pages/account/widget/profile_card.dart';
+import 'package:hair_salon/pages/account/widget/setting_card.dart';
 
 class Account extends StatefulWidget {
   @override
@@ -12,20 +13,15 @@ class _AccountState extends State<Account> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.green,
-        centerTitle: true,
-        title: Text(
-          'Account',
-          style: customFont,
-        ),
+      backgroundColor: Theme.of(context).backgroundColor,
+      appBar: GlobalAppBar(
+        '',
+        color: Theme.of(context).backgroundColor,
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(15),
+        padding: EdgeInsets.all(10),
         child: Column(
-          children: [
-            ProfileCard(),
-          ],
+          children: [ProfileCard(), History(), SettingCard()],
         ),
       ),
     );

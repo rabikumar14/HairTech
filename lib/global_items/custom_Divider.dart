@@ -1,4 +1,5 @@
-import 'package:hair_salon/global_items/package_export.dart';
+
+import 'package_export.dart';
 
 class CustomDivider extends StatelessWidget {
   @override

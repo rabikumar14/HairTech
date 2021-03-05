@@ -1,9 +1,10 @@
-import 'package:hair_salon/global_items/font.dart';
-import 'package:hair_salon/global_items/nav_bar/bot_nav_settings.dart';
-import 'package:hair_salon/global_items/package_export.dart';
-import 'package:hair_salon/pages/appointment/appt_page.dart';
-import 'package:hair_salon/pages/home/homepage.dart';
-import 'package:hair_salon/pages/page_export.dart';
+
+
+
+import '../../pages/page_export.dart';
+import '../font.dart';
+import '../package_export.dart';
+import 'bot_nav_settings.dart';
 
 class BotNavBar extends StatefulWidget {
   @override
@@ -39,7 +40,7 @@ class _BotNavBarState extends State<BotNavBar> {
         children: <Widget>[
           HairTechHome(),
           ProductPage(),
-          BookPage(),
+          ApptPage(),
           Account(),
           //todo uncomment once other pages settled
         ],

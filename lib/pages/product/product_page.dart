@@ -1,8 +1,7 @@
 import 'package:hair_salon/global_items/package_export.dart';
 import 'package:hair_salon/global_items/widget_export.dart';
-import 'package:hair_salon/pages/cart/cart_page.dart';
-
-import 'package:hair_salon/pages/product/widget/product_tile.dart';
+import 'package:hair_salon/pages/page_export.dart';
+import 'package:hair_salon/pages/product/product_export.dart';
 
 class ProductPage extends StatefulWidget {
   ProductPage({Key key}) : super(key: key);
@@ -99,7 +98,7 @@ class _ProductPageState extends State<ProductPage> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: List.generate(10, (index) {
         if (index.isEven) {
-          return ProductWidget();
+          return ProductTile();
         }
 
         return Container(
@@ -116,7 +115,7 @@ class _ProductPageState extends State<ProductPage> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: List.generate(10, (index) {
           if (index.isOdd) {
-            return ProductWidget();
+            return ProductTile();
           }
 
           return Container(

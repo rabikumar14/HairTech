@@ -1,14 +1,13 @@
-import 'package:hair_salon/global_items/app_bar/app_bar_action.dart';
 import 'package:hair_salon/global_items/package_export.dart';
-import 'package:hair_salon/global_items/widget_export.dart';
+import 'package:hair_salon/pages/appointment/widget/hairstylist_card.dart';
 import 'package:intl/intl.dart';
 
-class BookPage extends StatefulWidget {
+class ApptPage extends StatefulWidget {
   @override
-  _BookPageState createState() => _BookPageState();
+  _ApptPageState createState() => _ApptPageState();
 }
 
-class _BookPageState extends State<BookPage> {
+class _ApptPageState extends State<ApptPage> {
   List<String> months = [
     'January',
     'February',
@@ -37,7 +36,6 @@ class _BookPageState extends State<BookPage> {
     //buttonTime
     return Scaffold(
       backgroundColor: Colors.white,
-  
       body: Container(
         width: screenWidth,
         height: screenHeight,
@@ -57,20 +55,14 @@ class _BookPageState extends State<BookPage> {
                   ),
                 ),
               ),
-
-
-ConstrainedBox(
-  constraints: new BoxConstraints(
-    minHeight: 200.0,
-   minWidth: 200.0,
-    maxHeight: 500.0,
-    maxWidth: 500.0
-   
-  ),
-  child: _buildTimeSlots(),
-),
-                 
-   
+              ConstrainedBox(
+                constraints: new BoxConstraints(
+                    minHeight: 200.0,
+                    minWidth: 200.0,
+                    maxHeight: 500.0,
+                    maxWidth: 500.0),
+                child: _buildTimeSlots(),
+              ),
               SizedBox(height: 10),
               Text(
                 'Available Hair Stylists',
@@ -85,13 +77,13 @@ ConstrainedBox(
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   children: [
-                    HairStylistWidget(),
+                    HairstylistCard(),
                     SizedBox(width: 10),
-                    HairStylistWidget(),
+                    HairstylistCard(),
                     SizedBox(width: 10),
-                    HairStylistWidget(),
+                    HairstylistCard(),
                     SizedBox(width: 10),
-                    HairStylistWidget(),
+                    HairstylistCard(),
                   ],
                 ),
               )
@@ -101,7 +93,6 @@ ConstrainedBox(
       ),
     );
   }
-
 
   ///simple stateful date picker
   Widget datePicker() {
@@ -281,64 +272,6 @@ ConstrainedBox(
               ),
             );
           }),
-    );
-  }
-}
-
-class HairStylistWidget extends StatelessWidget {
-  HairStylistWidget({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {},
-      child: Container(
-        height: 160,
-        width: 160,
-        child: Card(
-          shadowColor: Colors.grey[300],
-          elevation: 5,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-          child: Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Colors.grey[100],
-                  Colors.white,
-                ],
-                stops: [0.1, 1],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                CircleAvatar(
-                  radius: 45.0,
-                  backgroundColor: Colors.transparent,
-                ),
-                SizedBox(height: 10),
-                Text(
-                  "Alex Dunphy",
-                  style: GoogleFonts.varelaRound(
-                    fontSize: 18,
-                    color: Theme.of(context).primaryColor,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 2,
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
     );
   }
 }

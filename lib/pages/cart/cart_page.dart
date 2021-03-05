@@ -1,6 +1,7 @@
 import 'package:hair_salon/global_items/package_export.dart';
 import 'package:hair_salon/pages/cart/cart_item.dart';
 
+//todo fix colour & depreciated buttons
 class CartPage extends StatefulWidget {
   @override
   _CartPageState createState() => _CartPageState();

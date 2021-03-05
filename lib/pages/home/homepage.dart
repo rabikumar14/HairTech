@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class HairTechHome extends StatefulWidget {
@@ -10,18 +9,7 @@ class _HairTechHomeState extends State<HairTechHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _homeAppBar(),
-     
+      body: Column(),
     );
-  }
-
-  _homeAppBar()
-  {
-    return AppBar();
-  }
-
-  _homeBody()
-  {
-
   }
 }

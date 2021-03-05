@@ -1,5 +1,5 @@
-import 'package:hair_salon/global_items/font.dart';
 import 'package:hair_salon/global_items/package_export.dart';
+import 'package:hair_salon/global_items/widget_export.dart';
 
 class CartItem extends StatelessWidget {
   const CartItem({Key key}) : super(key: key);
@@ -40,35 +40,7 @@ class CartItem extends StatelessWidget {
                         )),
                   ],
                 ),
-                Row(
-                  children: [
-                    SizedBox(
-                      height: 20,
-                    ),
-                    IconButton(icon: Icon(Icons.add), onPressed: () {}),
-                    Center(
-                      child: Row(
-                        children: <Widget>[
-                          Container(
-                            height: 30,
-                            width: 30,
-                            decoration: BoxDecoration(
-                                border: Border.all(color: Colors.black)),
-                            child: Center(
-                              child: Text(
-                                1.toString(),
-                                style: TextStyle(
-                                    fontSize: 14.0, color: Colors.black),
-                              ),
-                            ),
-                          ),
-                          IconButton(
-                              icon: Icon(Icons.remove), onPressed: () {}),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+                CartCounter()
               ],
             ),
           ],

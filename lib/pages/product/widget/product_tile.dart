@@ -2,8 +2,8 @@ import 'package:hair_salon/global_items/package_export.dart';
 import 'package:hair_salon/global_items/widget_export.dart';
 import 'package:hair_salon/pages/product/product_details_page.dart';
 
-class ProductWidget extends StatelessWidget {
-  ProductWidget({
+class ProductTile extends StatelessWidget {
+  ProductTile({
     Key key,
   }) : super(key: key);
 
@@ -36,7 +36,6 @@ class ProductWidget extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     maxLines: 3,
                   ),
-              
                   textFont(
                     '\$' + '25.99',
                     Theme.of(context).accentColor,
