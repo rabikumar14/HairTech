@@ -1,6 +1,3 @@
-
-
-
 import '../../pages/page_export.dart';
 import '../font.dart';
 import '../package_export.dart';
@@ -38,7 +35,7 @@ class _BotNavBarState extends State<BotNavBar> {
           setState(() => currentIndex = index);
         },
         children: <Widget>[
-          HairTechHome(),
+          HomePage(),
           ProductPage(),
           ApptPage(),
           Account(),
