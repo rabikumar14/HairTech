@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "992184450918",
+    "project_id": "hairtech-sg",
+    "storage_bucket": "hairtech-sg.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:992184450918:android:597b614beaed3049cc92a7",
+        "android_client_info": {
+          "package_name": "com.errorstacker.hair_salon"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "992184450918-pj47mi5veqq15irij45olqfb10q08lf7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtvowmEZr9CSP38bYrXovmFjuxfK4vxTE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "992184450918-pj47mi5veqq15irij45olqfb10q08lf7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "992184450918-97032576ohlu91pimb8k1lhbgaerc6b8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.errorstacker.hairSalon",
+                "app_store_id": "20012021"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

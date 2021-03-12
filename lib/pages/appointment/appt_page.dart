@@ -1,5 +1,6 @@
+import 'package:hair_salon/global_items/hairstylist_card.dart';
 import 'package:hair_salon/global_items/package_export.dart';
-import 'file:///C:/src/Flutter%20Projects/HairTech/hair_salon/lib/global_items/hairstylist_card.dart';
+
 import 'package:intl/intl.dart';
 
 class ApptPage extends StatefulWidget {
