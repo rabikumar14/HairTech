@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class AppConfig {
   double deliveryFee;
-  String appStatus;
+  String appStatus; 
 
   //<editor-fold desc="Data Methods" defaultstate="collapsed">
 

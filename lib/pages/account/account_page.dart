@@ -14,6 +14,7 @@ class _AccountState extends State<Account> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: GlobalAppBar("Your Account"),
       backgroundColor: Theme.of(context).backgroundColor,
       body: ListView(
         children: [

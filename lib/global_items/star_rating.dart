@@ -17,7 +17,7 @@ class StarRating extends StatelessWidget {
         super(key: key);
   @override
   Widget build(BuildContext context) {
-    final color = Theme.of(context).accentColor;
+    final color = Colors.yellow[800];
 
     return Row(
       mainAxisSize: MainAxisSize.min,
@@ -32,7 +32,7 @@ class StarRating extends StatelessWidget {
             index < value
                 ? filledStar ?? Icons.star
                 : unfilledStar ?? Icons.star_border,
-            color: index < value ? color : null,
+            color: index < value ? color : color,
             size: size,
           ),
         );

@@ -1,4 +1,5 @@
 import 'package:hair_salon/global_items/package_export.dart';
+import 'package:hair_salon/global_items/widget_export.dart';
 import 'package:hair_salon/pages/cart/cart_item.dart';
 
 //todo fix colour & depreciated buttons
@@ -12,7 +13,7 @@ class _CartPageState extends State<CartPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: _buildAppBar(),
+      appBar: GlobalAppBar("Your Cart"),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 30),
         child: SingleChildScrollView(

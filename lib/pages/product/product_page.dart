@@ -15,7 +15,7 @@ class _ProductPageState extends State<ProductPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
-      appBar: GlobalAppBar('',
+      appBar: GlobalAppBar('Our Products',
           action: AppBarAction(
             Icons.shopping_cart,
             route: () {

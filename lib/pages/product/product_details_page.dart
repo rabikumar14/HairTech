@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hair_salon/global_items/app_bar/app_bar.dart';
+import 'package:hair_salon/global_items/cart_counter.dart';
+import 'package:hair_salon/pages/theme/theme_export.dart';
 
 class ProductDetails extends StatefulWidget {
   const ProductDetails({Key key}) : super(key: key);
@@ -14,13 +17,25 @@ class _ProductDetailsState extends State<ProductDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: _buildAddToCart(),
+      appBar: GlobalAppBar("Product Details", color: Colors.grey[200],),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: FloatingActionButton(onPressed: (){},child: Icon(Icons.add), ),
+      ),
+   
+      
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             _buildProductImage(),
             _buildAbout(),
+            
+              //  Row(mainAxisAlignment: MainAxisAlignment.center,
+              //    children: [
+              //      CartCounter(),
+              //    ],
+              //  ),
           ],
         ),
       ),
@@ -33,7 +48,7 @@ class _ProductDetailsState extends State<ProductDetails> {
         gradient: LinearGradient(
           colors: [
             Colors.grey[200],
-            Colors.white,
+            Colors.grey[200],
           ],
           stops: [0.1, 1],
           begin: Alignment.topRight,
@@ -65,7 +80,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     Text(
                       "Nivia Men Shampoo",
                       style: GoogleFonts.varelaRound(
-                        color: Theme.of(context).primaryColor,
+                        color: Theme.of(context).accentColor,
                         fontWeight: FontWeight.w600,
                         fontSize: 18,
                       ),
@@ -73,7 +88,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     Text(
                       "Conditioner",
                       style: GoogleFonts.varelaRound(
-                        color: Theme.of(context).primaryColor,
+                        color: Theme.of(context).accentColor,
                         fontWeight: FontWeight.w400,
                         fontSize: 15,
                       ),
@@ -129,8 +144,8 @@ class _ProductDetailsState extends State<ProductDetails> {
       padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
       child: FlatButton(
           shape: new RoundedRectangleBorder(
-              borderRadius: new BorderRadius.circular(30.0)),
-          color: Theme.of(context).primaryColor,
+              borderRadius: new BorderRadius.circular(25.0)),
+          color: Colors.pink[400],
           onPressed: () {},
           child: Row(
             mainAxisSize: MainAxisSize.min,
@@ -139,15 +154,15 @@ class _ProductDetailsState extends State<ProductDetails> {
                 padding: const EdgeInsets.all(8.0),
                 child: Icon(
                   Icons.shopping_cart,
-                  size: 36,
+                  size: 24,
                   color: Colors.white,
                 ),
               ),
               Text("Add to Cart",
                   style: GoogleFonts.varelaRound(
                     color: Colors.white,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 18,
+                
+                    fontSize: 16,
                   ))
             ],
           )),

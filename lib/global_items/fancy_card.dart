@@ -2,18 +2,21 @@ import 'package:hair_salon/global_items/package_export.dart';
 
 class FancyCard extends StatelessWidget {
   final Widget widget;
+  final double elevation;
+  final double horizontalPadding;
+  final double verticalPadding;
 
   const FancyCard(
     this.widget, {
-    Key key,
+    Key key, this.elevation, this.horizontalPadding, this.verticalPadding,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 5,
+      elevation: elevation != null ? elevation : 4,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        padding: EdgeInsets.symmetric(horizontal: horizontalPadding == null ? 20 : horizontalPadding, vertical: verticalPadding == null ? 10 : verticalPadding),
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [

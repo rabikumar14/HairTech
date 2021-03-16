@@ -1,5 +1,6 @@
 import 'package:hair_salon/global_items/hairstylist_card.dart';
 import 'package:hair_salon/global_items/package_export.dart';
+import 'package:hair_salon/global_items/widget_export.dart';
 
 import 'package:intl/intl.dart';
 
@@ -37,6 +38,7 @@ class _ApptPageState extends State<ApptPage> {
     //buttonTime
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: GlobalAppBar("Select Timeslot and Stylist", color: Colors.grey[100],),
       body: Container(
         width: screenWidth,
         height: screenHeight,

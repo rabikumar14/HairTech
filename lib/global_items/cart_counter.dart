@@ -46,12 +46,12 @@ class _CartCounterState extends State<CartCounter> {
       height: 32,
       child: OutlinedButton(
         style: OutlinedButton.styleFrom(
-          elevation: 5,
-          backgroundColor: Theme.of(context).canvasColor,
+          elevation: 0,
+          backgroundColor: Theme.of(context).backgroundColor,
           primary: Theme.of(context).primaryColor,
           padding: EdgeInsets.zero,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(13),
+            borderRadius: BorderRadius.circular(10),
           ),
         ),
         onPressed: press,
