@@ -1,0 +1,13 @@
+{
+    "name": "@types/stripe",
+    "version": "8.0.417",
+    "typings": null,
+    "description": "Stub TypeScript definitions entry for stripe, which provides its own types definitions",
+    "main": "",
+    "scripts": {},
+    "author": "",
+    "license": "MIT",
+    "dependencies": {
+        "stripe": "*"
+    }
+}

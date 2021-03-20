@@ -1,44 +1,108 @@
+import 'package:hair_salon/global_items/breakpoints.dart';
 import 'package:hair_salon/global_items/fancy_card.dart';
 import 'package:hair_salon/global_items/font.dart';
 import 'package:hair_salon/global_items/package_export.dart';
+import 'package:hair_salon/main.dart';
+import 'package:hair_salon/models/salon.dart';
+import 'package:hair_salon/pages/services/salon_service.dart';
 
 class OutletCard extends StatefulWidget {
   final String bgImage;
+  final Salon salon;
 
-  const OutletCard({Key key, this.bgImage}) : super(key: key);
+  const OutletCard({Key key, this.bgImage, this.salon}) : super(key: key);
 
   @override
   _OutletCardState createState() => _OutletCardState();
 }
 
 class _OutletCardState extends State<OutletCard> {
+    List<String> services = [];
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 10,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+  
+
+    if (services.length == 0) {
+      widget.salon.salonServices.forEach((element) {
+        services.add(element.serviceName);
+      });
+    }
+
+    return Center(
       child: Container(
-        width: MediaQuery.of(context).size.width * .6,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            image: DecorationImage(
-                colorFilter: ColorFilter.mode(
-                    Colors.black.withOpacity(0.4), BlendMode.darken),
-                image: NetworkImage(
-                    'https://scontent.fsin9-2.fna.fbcdn.net/v/t1.0-9/74661747_1442722825865598_5378789738956193792_o.jpg?_nc_cat=100&ccb=3&_nc_sid=0debeb&_nc_ohc=fbtwuwDIOTQAX-2n03t&_nc_ht=scontent.fsin9-2.fna&oh=0672c6ae6418fa287ae3f1a2eafaeb47&oe=60631900'),
-                fit: BoxFit.cover)),
+        height: MediaQuery.of(context).size.height * 0.3,
+        width: isDisplayDesktop(context) == true
+            ? (MediaQuery.of(context).size.width)
+            : MediaQuery.of(context).size.width * 0.9,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[
+          children: [
             Container(
-              padding: EdgeInsets.all(5),
+              width: isDisplayDesktop(context) == true
+                  ? (MediaQuery.of(context).size.width - 300)
+                  : MediaQuery.of(context).size.width * 0.9,
+              height: MediaQuery.of(context).size.height * 0.2,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
-                  color: Theme.of(context).accentColor.withOpacity(0.4)),
-              child: textFont('Farrer Payoh Road, Blk 1, #01-21',
-                  Theme.of(context).primaryColor),
+                  image: DecorationImage(
+                      colorFilter: ColorFilter.mode(
+                          Colors.black.withOpacity(0.1), BlendMode.darken),
+                      image: NetworkImage(widget.salon.salonCoverImage),
+                      fit: BoxFit.cover)),
+              child: Stack(
+                children: <Widget>[
+                  Positioned(
+                    right: 25,
+                    bottom: 15,
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => AllServicesPage(salon: widget.salon,)),
+                        );
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(2.0),
+                        child: Text("Book now",
+                            style: GoogleFonts.varelaRound(
+                              color: Colors.black,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 14,
+                            )),
+                      ),
+                      style: TextButton.styleFrom(
+                          backgroundColor: Theme.of(context).backgroundColor),
+                    ),
+                  )
+                ],
+              ),
             ),
+            SizedBox(height: 10),
+            Text(widget.salon.salonName,
+                style: GoogleFonts.varelaRound(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14,
+                )),
+            Text(
+              "Services : " +
+                  services
+                      .toString()
+                      .substring(1, services.toString().length - 1),
+              style: GoogleFonts.varelaRound(
+                color: Colors.grey[500],
+                fontWeight: FontWeight.w500,
+                fontSize: 14,
+              ),
+              overflow: TextOverflow.ellipsis,
+            ),
+        Text("Tag: " + widget.salon.salonCategory,
+              style: GoogleFonts.varelaRound(
+                color: Colors.black,
+                fontWeight: FontWeight.w500,
+                fontSize: 14,
+              )),
           ],
         ),
       ),

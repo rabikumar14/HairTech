@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hair_salon/global_items/app_bar/app_bar.dart';
+import 'package:hair_salon/global_items/cart_counter.dart';
+import 'package:hair_salon/models/product.dart';
+import 'package:hair_salon/pages/theme/theme_export.dart';
 
 class ProductDetails extends StatefulWidget {
-  const ProductDetails({Key key}) : super(key: key);
+  final Product product;
+  const ProductDetails({Key key, this.product}) : super(key: key);
   @override
   _ProductDetailsState createState() => _ProductDetailsState();
 }
@@ -14,13 +19,40 @@ class _ProductDetailsState extends State<ProductDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: _buildAddToCart(),
+      appBar: GlobalAppBar("Product Details", color: Colors.grey[200],),
+      floatingActionButton: Builder(
+        builder: (BuildContext context) {
+         
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: FloatingActionButton.extended(
+              onPressed: () {
+         
+              },
+              icon: Icon(Icons.add),
+              label: Text(
+                "Add to Cart",
+                style: TextStyle(color: Colors.white),
+              ),
+              backgroundColor: Colors.black,
+            ),
+          );
+        },
+      ),
+   
+      
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             _buildProductImage(),
             _buildAbout(),
+            
+              //  Row(mainAxisAlignment: MainAxisAlignment.center,
+              //    children: [
+              //      CartCounter(),
+              //    ],
+              //  ),
           ],
         ),
       ),
@@ -33,7 +65,7 @@ class _ProductDetailsState extends State<ProductDetails> {
         gradient: LinearGradient(
           colors: [
             Colors.grey[200],
-            Colors.white,
+            Colors.grey[200],
           ],
           stops: [0.1, 1],
           begin: Alignment.topRight,
@@ -41,9 +73,9 @@ class _ProductDetailsState extends State<ProductDetails> {
         ),
       ),
       child: Hero(
-        tag: 22.toString(),
+        tag: widget.product.documentId,
         child: Image.network(
-          "https://www.tresemme.com/content/dam/unilever/tresemme/south_africa/pack_shot/front/hair_care/wash_and_care/tresemm%C3%A9_expert_selection_conditioner_keratin_smooth_750ml/tresemme_keratin_smooth_conditioner_750ml_fop-953090-png.png",
+          widget.product.productImg,
           height: 300,
         ),
       ),
@@ -63,17 +95,17 @@ class _ProductDetailsState extends State<ProductDetails> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      "Nivia Men Shampoo",
+                      widget.product.productName,
                       style: GoogleFonts.varelaRound(
-                        color: Theme.of(context).primaryColor,
+                        color: Theme.of(context).accentColor,
                         fontWeight: FontWeight.w600,
                         fontSize: 18,
                       ),
                     ),
                     Text(
-                      "Conditioner",
+                      widget.product.productCategory,
                       style: GoogleFonts.varelaRound(
-                        color: Theme.of(context).primaryColor,
+                        color: Theme.of(context).accentColor,
                         fontWeight: FontWeight.w400,
                         fontSize: 15,
                       ),
@@ -97,7 +129,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     ),
                   ),
                   child: Text(
-                    '\$' + 25.99.toString(),
+                    '\$' + widget.product.productPrice.toString(),
                     style: GoogleFonts.varelaRound(
                       color: Theme.of(context).primaryColor,
                       fontWeight: FontWeight.w600,
@@ -111,7 +143,7 @@ class _ProductDetailsState extends State<ProductDetails> {
           Container(
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
             child: Text(
-              description,
+              widget.product.productDescription,
               style: GoogleFonts.varelaRound(
                 color: Colors.grey,
                 fontWeight: FontWeight.w400,
@@ -129,8 +161,8 @@ class _ProductDetailsState extends State<ProductDetails> {
       padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
       child: FlatButton(
           shape: new RoundedRectangleBorder(
-              borderRadius: new BorderRadius.circular(30.0)),
-          color: Theme.of(context).primaryColor,
+              borderRadius: new BorderRadius.circular(25.0)),
+          color: Colors.pink[400],
           onPressed: () {},
           child: Row(
             mainAxisSize: MainAxisSize.min,
@@ -139,15 +171,15 @@ class _ProductDetailsState extends State<ProductDetails> {
                 padding: const EdgeInsets.all(8.0),
                 child: Icon(
                   Icons.shopping_cart,
-                  size: 36,
+                  size: 24,
                   color: Colors.white,
                 ),
               ),
               Text("Add to Cart",
                   style: GoogleFonts.varelaRound(
                     color: Colors.white,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 18,
+                
+                    fontSize: 16,
                   ))
             ],
           )),

@@ -1,45 +1,62 @@
-import 'package:hair_salon/global_items/hairstylist_card.dart';
 import 'package:hair_salon/global_items/package_export.dart';
-
+import 'package:hair_salon/global_items/radio_button.dart';
+import 'package:hair_salon/global_items/widget_export.dart';
+import 'package:hair_salon/models/salon.dart';
 import 'package:intl/intl.dart';
 
 class ApptPage extends StatefulWidget {
+  final Salon salon;
+  final SalonServices salonServices;
+
+  const ApptPage({Key key, this.salon, this.salonServices}) : super(key: key);
   @override
   _ApptPageState createState() => _ApptPageState();
 }
 
 class _ApptPageState extends State<ApptPage> {
-  List<String> months = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December'
-  ];
+  //choose outlet
+  List<String> chooseOutlet = [];
+  String outletValue = "(Select Outlet)";
 
-  String selectedTimeSlot = "";
+  //choose time
+  String selectedTimeSlot = "(Select Time)";
+
+  //choose day
   String selectDate = DateTime.now().add(Duration(days: 0)).day.toString();
   String selectDay =
       DateFormat('EE').format(DateTime.now().add(Duration(days: 0)));
   String pos = '0';
   int selected = DateTime.now().day + 0;
+
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
+    //make a string list of the salon outlet can refactor
+    if (chooseOutlet.length == 0) {
+      widget.salon.salonOutlets.forEach((element) {
+        chooseOutlet.add(element.addressLineOne);
+      });
+    }
+
+    void changeOutletValue(String value) {
+      setState(() {
+        outletValue = value;
+      });
+    }
+
+    String returnOutletGroup() {
+      return outletValue;
+    }
+
     //buttonTime
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: GlobalAppBar(
+        "Select Timeslot and Outlet",
+        color: Colors.grey[100],
+      ),
       body: Container(
-        width: screenWidth,
-        height: screenHeight,
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
         color: Colors.white,
         child: SingleChildScrollView(
           child: Column(
@@ -50,7 +67,7 @@ class _ApptPageState extends State<ApptPage> {
                 child: Text(
                   'Available Timeslots',
                   style: GoogleFonts.varelaRound(
-                    fontSize: 18,
+                    fontSize: 16,
                     color: Colors.black,
                     fontWeight: FontWeight.w600,
                   ),
@@ -66,32 +83,23 @@ class _ApptPageState extends State<ApptPage> {
               ),
               SizedBox(height: 10),
               Text(
-                'Available Hair Stylists',
+                widget.salon.salonName + "'s \n Available Outlets",
                 style: GoogleFonts.varelaRound(
-                  fontSize: 18,
+                  fontSize: 16,
                   color: Colors.black,
                   fontWeight: FontWeight.w600,
                 ),
+                textAlign: TextAlign.center,
               ),
               SizedBox(height: 10),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    HairstylistCard(),
-                    SizedBox(width: 10),
-                    HairstylistCard(),
-                    SizedBox(width: 10),
-                    HairstylistCard(),
-                    SizedBox(width: 10),
-                    HairstylistCard(),
-                  ],
-                ),
-              )
+              Column(
+                  children: radioButtonList(
+                      chooseOutlet, changeOutletValue, returnOutletGroup)),
             ],
           ),
         ),
       ),
+      bottomNavigationBar: _bottomSheetAppointment(),
     );
   }
 
@@ -102,25 +110,6 @@ class _ApptPageState extends State<ApptPage> {
       color: Colors.grey[100],
       child: Column(
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-            child: Text(
-              '$selectDate, ' +
-                  months[
-                      DateTime.now().add(Duration(days: int.parse(pos))).month -
-                          1] +
-                  ", " +
-                  DateTime.now()
-                      .add(Duration(days: int.parse(pos)))
-                      .year
-                      .toString(),
-              style: GoogleFonts.varelaRound(
-                color: Colors.black,
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
           Container(
               height: 90,
               decoration: BoxDecoration(
@@ -150,7 +139,7 @@ class _ApptPageState extends State<ApptPage> {
                                     ),
                                   ),
                                   style: GoogleFonts.varelaRound(
-                                    fontSize: 16,
+                                    fontSize: 14,
                                     color: selected == day
                                         ? Colors.black
                                         : Colors.grey[500],
@@ -175,7 +164,7 @@ class _ApptPageState extends State<ApptPage> {
                                           .day
                                           .toString(),
                                       style: GoogleFonts.varelaRound(
-                                        fontSize: 16,
+                                        fontSize: 14,
                                         fontWeight: day == DateTime.now().day
                                             ? FontWeight.bold
                                             : FontWeight.bold,
@@ -204,6 +193,162 @@ class _ApptPageState extends State<ApptPage> {
                         });
                   }))
         ],
+      ),
+    );
+  }
+
+  Widget _bottomSheetAppointment() {
+    List<String> months = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December'
+    ];
+
+    return Container(
+      height: 175,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Divider(),
+            Padding(
+              padding: const EdgeInsets.only(top: 5, bottom: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  RichText(
+                    text: new TextSpan(
+                      text: 'Service: ',
+                      style: GoogleFonts.varelaRound(
+                        fontSize: 14,
+                        color: Colors.pink,
+                        fontWeight: FontWeight.w400,
+                      ),
+                      children: <TextSpan>[
+                        new TextSpan(
+                          text: widget.salonServices.serviceName,
+                          style: GoogleFonts.varelaRound(
+                            fontSize: 14,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Spacer(),
+                  RichText(
+                    text: new TextSpan(
+                      text: 'Total: ',
+                      style: GoogleFonts.varelaRound(
+                        fontSize: 14,
+                        color: Colors.pink,
+                        fontWeight: FontWeight.w400,
+                      ),
+                      children: <TextSpan>[
+                        new TextSpan(
+                          text: '\$' +
+                              widget.salonServices.serviceCost.toString(),
+                          style: GoogleFonts.varelaRound(
+                            fontSize: 14,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: RichText(
+                text: new TextSpan(
+                  text: 'Date & Time: ',
+                  style: GoogleFonts.varelaRound(
+                    fontSize: 14,
+                    color: Colors.pink,
+                    fontWeight: FontWeight.w400,
+                  ),
+                  children: <TextSpan>[
+                    new TextSpan(
+                      text: selectDate +
+                          ", " +
+                          months[DateTime.now()
+                                  .add(Duration(days: int.parse(pos)))
+                                  .month -
+                              1] +
+                          ", " +
+                          DateTime.now()
+                              .add(Duration(days: int.parse(pos)))
+                              .year
+                              .toString() +
+                          " at " +
+                          selectedTimeSlot,
+                      style: GoogleFonts.varelaRound(
+                        fontSize: 14,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: RichText(
+                text: new TextSpan(
+                  text: 'Outlet: ',
+                  style: GoogleFonts.varelaRound(
+                    fontSize: 14,
+                    color: Colors.pink,
+                    fontWeight: FontWeight.w400,
+                  ),
+                  children: <TextSpan>[
+                    new TextSpan(
+                      text: outletValue,
+                      style: GoogleFonts.varelaRound(
+                        fontSize: 14,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Center(
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    primary: selectedTimeSlot == "(Select Time)" ||
+                            outletValue == "(Select Outlet)"
+                        ? Colors.black
+                        : Colors.pink[300]),
+                child: Text(
+                  'Confirm booking',
+                  style: TextStyle(color: Colors.white),
+                ),
+                onPressed: () {
+                  if(selectedTimeSlot == "(Select Time)" || outletValue == "(Select Outlet)"){
+                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Please select the time and outlet'), duration: Duration(seconds: 2),));
+                  }
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -261,7 +406,7 @@ class _ApptPageState extends State<ApptPage> {
                     child: Text(
                       timeSlots[index],
                       style: GoogleFonts.varelaRound(
-                        fontSize: 16,
+                        fontSize: 14,
                         fontWeight: FontWeight.bold,
                         color: selectedTimeSlot == timeSlots[index]
                             ? Colors.pinkAccent

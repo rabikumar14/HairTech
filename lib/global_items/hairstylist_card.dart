@@ -12,30 +12,43 @@ class HairstylistCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {},
       child: Container(
-        height: 160,
-        width: 160,
+        height: 180,
+        width: 180,
         child: FancyCard(
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              CircleAvatar(
-                foregroundImage: NetworkImage(
-                    'https://scontent.fsin9-2.fna.fbcdn.net/v/t1.0-9/74661747_1442722825865598_5378789738956193792_o.jpg?_nc_cat=100&ccb=3&_nc_sid=0debeb&_nc_ohc=fbtwuwDIOTQAX-2n03t&_nc_ht=scontent.fsin9-2.fna&oh=0672c6ae6418fa287ae3f1a2eafaeb47&oe=60631900'),
-                radius: 45.0,
-                backgroundColor: Colors.transparent,
+              Container(
+                height: 130,
+           
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: NetworkImage(
+                        'https://hairsaloninna.com/wp-content/uploads/2020/01/Hair-Stylist.jpg'),
+                  ),
+                ),
               ),
-              textFont("Alex Dunphy", Theme.of(context).primaryColor,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 2),
+              Padding(
+                padding: const EdgeInsets.only(top: 5),
+                child: textFont("Alex Dunphy", Theme.of(context).accentColor,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 14,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2),
+              ),
               StarRating(
                 value: 3,
                 size: 16,
               ),
+              SizedBox(height:3),
             ],
           ),
+          horizontalPadding: 0,
+          verticalPadding: 0,
+          elevation: 2,
         ),
       ),
     );

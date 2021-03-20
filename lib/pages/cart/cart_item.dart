@@ -28,7 +28,7 @@ class CartItem extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                textFont('Nivia Men Shampoo', Theme.of(context).primaryColor,
+                textFont('Nivia Men Shampoo', Theme.of(context).accentColor,
                     fontWeight: FontWeight.bold, fontSize: 14, maxLines: 3),
                 Row(
                   children: <Widget>[
@@ -40,6 +40,7 @@ class CartItem extends StatelessWidget {
                         )),
                   ],
                 ),
+                SizedBox(height:10),
                 CartCounter()
               ],
             ),
@@ -56,7 +57,7 @@ class CartItem extends StatelessWidget {
                       "\$" + 25.99.toString(),
                       style: TextStyle(
                         fontSize: 14.0,
-                        fontWeight: FontWeight.w900,
+                        fontWeight: FontWeight.w400,
                         color: Colors.black,
                       ),
                     ),
