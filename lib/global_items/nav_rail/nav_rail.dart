@@ -30,7 +30,7 @@ class _SideNavRailState extends State<SideNavRail> {
         body: Row(
       children: [
         NavigationRail(
-          minExtendedWidth: 500,
+      
           extended: true,
           selectedIndex: _selectedIndex,
           onDestinationSelected: (int index) {

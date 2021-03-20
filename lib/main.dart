@@ -1,12 +1,22 @@
+import 'dart:io';
+
 import 'package:adaptive_breakpoints/adaptive_breakpoints.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:hair_salon/firebase_services/google_sign_in.dart';
 import 'package:hair_salon/global_items/nav_rail/nav_rail.dart';
 import 'package:hair_salon/global_items/package_export.dart';
 import 'package:hair_salon/global_items/widget_export.dart';
+import 'package:hair_salon/models/product.dart';
+import 'package:hair_salon/models/salon.dart';
 import 'package:hair_salon/pages/theme/theme_export.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:hair_salon/varuns/database_service.dart';
+
+import 'global_items/breakpoints.dart';
 
 Future<void> main() async {
-    WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(ChangeNotifierProvider<ThemeNotifier>(
       create: (_) => ThemeNotifier(lightThemePink), child: MyApp()));
@@ -17,38 +27,48 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeNotifier = Provider.of<ThemeNotifier>(context);
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-    return MaterialApp(theme: themeNotifier.getTheme(), home: LandingPage());
+    return MultiProvider(
+        providers: [
+          StreamProvider<List<Salon>>(
+            create: (_) => salon(),
+            initialData: [],
+          ),
+          StreamProvider<List<Product>>(
+            create: (_) => products(),
+            initialData: [],
+          ),
+        ],
+        child:
+            MaterialApp(theme: themeNotifier.getTheme(), home: AuthWrapper()));
   }
 }
 
-
-/// Returns a boolean value whether the window is considered medium or large size.
-///
-/// Used to build adaptive and responsive layouts.
-bool isDisplayDesktop(BuildContext context) =>
-    getWindowType(context) >= AdaptiveWindowType.medium;
-
-/// Returns boolean value whether the window is considered medium size.
-///
-/// Used to build adaptive and responsive layouts.
-bool isDisplaySmallDesktop(BuildContext context) {
-  return getWindowType(context) == AdaptiveWindowType.medium;
-}
-class LandingPage extends StatefulWidget {
+class AuthWrapper extends StatelessWidget {
   @override
-  _LandingPageState createState() => _LandingPageState();
-}
+  Widget build(BuildContext context) => Scaffold(
+        body: ChangeNotifierProvider(
+          create: (context) => GoogleSignInProvider(),
+          child: StreamBuilder(
+            stream: FirebaseAuth.instance.authStateChanges(),
+            builder: (context, snapshot) {
+              final provider = Provider.of<GoogleSignInProvider>(context);
 
-class _LandingPageState extends State<LandingPage> {
-  @override
-  Widget build(BuildContext context) {
-    if(isDisplayDesktop(context) == true)
-    {
-      return SideNavRail(title: "HairTech");
-    }
-    else
-    {
-      return BotNavBar();
-    }
-  }
+              if (provider.isSigningIn) {
+                return buildLoading();
+              } else if (snapshot.hasData) {
+                return BotNavBar();
+              } else {
+                return BotNavBar2();
+              }
+            },
+          ),
+        ),
+      );
+
+  Widget buildLoading() => Stack(
+        fit: StackFit.expand,
+        children: [
+          Center(child: CircularProgressIndicator()),
+        ],
+      );
 }

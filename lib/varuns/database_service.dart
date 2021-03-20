@@ -1,58 +1,65 @@
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:saludsingapore/Models/models.dart';
-// import 'package:saludsingapore/Models/postage.dart';
-//
-// Stream<List<Postage>> postage() {
-//   return PostageCollection().collection.snapshots().map((snapshot) {
-//     return snapshot.docs.map((doc) => Postage.fromDocument(doc)).toList();
-//   });
-// }
-//
-// Stream<List<Products>> products() {
-//   return ProductCollection().collection.snapshots().map((snapshot) {
-//     return snapshot.docs.map((doc) => Products.fromDocument(doc)).toList();
-//   });
-// }
-//
-// Stream<List<Reviews>> reviews() {
-//   return ReviewsCollection().collection.snapshots().map((snapshot) {
-//     return snapshot.docs.map((doc) => Reviews.fromDocument(doc)).toList();
-//   });
-// }
-//
-// Stream<List<Categories>> categories() {
-//   return CategoriesCollection().collection.snapshots().map((snapshot) {
-//     return snapshot.docs.map((doc) => Categories.fromDocument(doc)).toList();
-//   });
-// }
-//
-// Stream<List<Order>> order() {
-//   return OrderCollection().collection.snapshots().map((snapshot) {
-//     return snapshot.docs.map((doc) => Order.fromDocument(doc)).toList();
-//   });
-// }
-//
-// class PostageCollection {
-//   CollectionReference collection =
-//       FirebaseFirestore.instance.collection('postage');
-// }
-//
-// class ProductCollection {
-//   CollectionReference collection =
-//       FirebaseFirestore.instance.collection('products');
-// }
-//
-// class OrderCollection {
-//   CollectionReference collection =
-//       FirebaseFirestore.instance.collection('order');
-// }
-//
-// class CategoriesCollection {
-//   CollectionReference collection =
-//       FirebaseFirestore.instance.collection('categories');
-// }
-//
-// class ReviewsCollection {
-//   CollectionReference collection =
-//       FirebaseFirestore.instance.collection('reviews');
-// }
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:hair_salon/models/appointment.dart';
+import 'package:hair_salon/models/category.dart';
+import 'package:hair_salon/models/order.dart';
+import 'package:hair_salon/models/product.dart';
+import 'package:hair_salon/models/salon.dart';
+
+Stream<List<Product>> products() {
+  return ProductCollection().collection.snapshots().map((snapshot) {
+    return snapshot.docs.map((doc) => Product.fromDocument(doc)).toList();
+  });
+}
+
+Stream<List<ProductCategory>> categories() {
+  return CategoriesCollection().collection.snapshots().map((snapshot) {
+    return snapshot.docs
+        .map((doc) => ProductCategory.fromDocument(doc))
+        .toList();
+  });
+}
+
+Stream<List<ProductOrder>> order() {
+  return OrderCollection().collection.snapshots().map((snapshot) {
+    return snapshot.docs.map((doc) => ProductOrder.fromDocument(doc)).toList();
+  });
+}
+
+Stream<List<Appointment>> appointment() {
+  return OrderCollection().collection.snapshots().map((snapshot) {
+    return snapshot.docs.map((doc) => Appointment.fromDocument(doc)).toList();
+  });
+}
+
+
+
+Stream<List<Salon>> salon() {
+  return SalonCollection().collection.snapshots().map((snapshot) {
+    return snapshot.docs.map((doc) => Salon.fromDocument(doc)).toList();
+  });
+}
+
+class ProductCollection {
+  CollectionReference collection =
+      FirebaseFirestore.instance.collection('products');
+}
+
+class OrderCollection {
+  CollectionReference collection =
+      FirebaseFirestore.instance.collection('orders');
+}
+
+class SalonCollection {
+  CollectionReference collection =
+      FirebaseFirestore.instance.collection('salons');
+}
+
+class AppointmentCollection {
+  CollectionReference collection =
+      FirebaseFirestore.instance.collection('appointments');
+}
+
+class CategoriesCollection {
+  CollectionReference collection =
+      FirebaseFirestore.instance.collection('categories');
+}

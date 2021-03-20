@@ -4,7 +4,7 @@ import 'package:hair_salon/global_items/package_export.dart';
 class GlobalAppBar extends StatelessWidget with PreferredSizeWidget {
   final Size preferredSize;
   final String title;
-  final Widget action;
+  final List<Widget> action;
   final bool isCenter;
 
   final Color color;
@@ -25,12 +25,10 @@ class GlobalAppBar extends StatelessWidget with PreferredSizeWidget {
       iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
       centerTitle: isCenter == null ? true : false,
       title: textFont(title, Theme.of(context).primaryColor,
-          fontWeight: FontWeight.w400),
-      actions: [
-        Center(
-          child: action,
-        )
-      ],
+          fontWeight: FontWeight.w400 ,fontSize: 16),
+      actions: 
+      action
+      
     );
   }
 }

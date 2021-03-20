@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hair_salon/global_items/app_bar/app_bar.dart';
 import 'package:hair_salon/global_items/cart_counter.dart';
+import 'package:hair_salon/models/product.dart';
 import 'package:hair_salon/pages/theme/theme_export.dart';
 
 class ProductDetails extends StatefulWidget {
-  const ProductDetails({Key key}) : super(key: key);
+  final Product product;
+  const ProductDetails({Key key, this.product}) : super(key: key);
   @override
   _ProductDetailsState createState() => _ProductDetailsState();
 }
@@ -18,9 +20,24 @@ class _ProductDetailsState extends State<ProductDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: GlobalAppBar("Product Details", color: Colors.grey[200],),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: FloatingActionButton(onPressed: (){},child: Icon(Icons.add), ),
+      floatingActionButton: Builder(
+        builder: (BuildContext context) {
+         
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: FloatingActionButton.extended(
+              onPressed: () {
+         
+              },
+              icon: Icon(Icons.add),
+              label: Text(
+                "Add to Cart",
+                style: TextStyle(color: Colors.white),
+              ),
+              backgroundColor: Colors.black,
+            ),
+          );
+        },
       ),
    
       
@@ -56,9 +73,9 @@ class _ProductDetailsState extends State<ProductDetails> {
         ),
       ),
       child: Hero(
-        tag: 22.toString(),
+        tag: widget.product.documentId,
         child: Image.network(
-          "https://www.tresemme.com/content/dam/unilever/tresemme/south_africa/pack_shot/front/hair_care/wash_and_care/tresemm%C3%A9_expert_selection_conditioner_keratin_smooth_750ml/tresemme_keratin_smooth_conditioner_750ml_fop-953090-png.png",
+          widget.product.productImg,
           height: 300,
         ),
       ),
@@ -78,7 +95,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      "Nivia Men Shampoo",
+                      widget.product.productName,
                       style: GoogleFonts.varelaRound(
                         color: Theme.of(context).accentColor,
                         fontWeight: FontWeight.w600,
@@ -86,7 +103,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       ),
                     ),
                     Text(
-                      "Conditioner",
+                      widget.product.productCategory,
                       style: GoogleFonts.varelaRound(
                         color: Theme.of(context).accentColor,
                         fontWeight: FontWeight.w400,
@@ -112,7 +129,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     ),
                   ),
                   child: Text(
-                    '\$' + 25.99.toString(),
+                    '\$' + widget.product.productPrice.toString(),
                     style: GoogleFonts.varelaRound(
                       color: Theme.of(context).primaryColor,
                       fontWeight: FontWeight.w600,
@@ -126,7 +143,7 @@ class _ProductDetailsState extends State<ProductDetails> {
           Container(
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
             child: Text(
-              description,
+              widget.product.productDescription,
               style: GoogleFonts.varelaRound(
                 color: Colors.grey,
                 fontWeight: FontWeight.w400,
