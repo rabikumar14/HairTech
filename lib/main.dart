@@ -12,7 +12,7 @@ import 'package:hair_salon/payment_services/locator.dart';
 import 'package:hair_salon/payment_services/network_service.dart';
 import 'package:hair_salon/payment_services/stripe_sdk/src/customer_session.dart';
 import 'package:hair_salon/payment_services/stripe_sdk/src/stripe.dart';
-import 'package:hair_salon/varuns/database_service.dart';
+import 'package:hair_salon/services/database_service.dart';
 
 
 // com.errorstacker.hair_salon

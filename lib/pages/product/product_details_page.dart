@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hair_salon/global_items/app_bar/app_bar.dart';
-import 'package:hair_salon/global_items/cart_counter.dart';
 import 'package:hair_salon/models/product.dart';
-import 'package:hair_salon/pages/theme/theme_export.dart';
-
 class ProductDetails extends StatefulWidget {
   final Product product;
   const ProductDetails({Key key, this.product}) : super(key: key);

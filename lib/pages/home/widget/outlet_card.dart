@@ -1,8 +1,5 @@
 import 'package:hair_salon/global_items/breakpoints.dart';
-import 'package:hair_salon/global_items/fancy_card.dart';
-import 'package:hair_salon/global_items/font.dart';
 import 'package:hair_salon/global_items/package_export.dart';
-import 'package:hair_salon/main.dart';
 import 'package:hair_salon/models/salon.dart';
 import 'package:hair_salon/pages/services/salon_service.dart';
 
@@ -17,11 +14,9 @@ class OutletCard extends StatefulWidget {
 }
 
 class _OutletCardState extends State<OutletCard> {
-    List<String> services = [];
+  List<String> services = [];
   @override
   Widget build(BuildContext context) {
-  
-
     if (services.length == 0) {
       widget.salon.salonServices.forEach((element) {
         services.add(element.serviceName);
@@ -59,7 +54,9 @@ class _OutletCardState extends State<OutletCard> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => AllServicesPage(salon: widget.salon,)),
+                              builder: (context) => AllServicesPage(
+                                    salon: widget.salon,
+                                  )),
                         );
                       },
                       child: Padding(
@@ -97,12 +94,12 @@ class _OutletCardState extends State<OutletCard> {
               ),
               overflow: TextOverflow.ellipsis,
             ),
-        Text("Tag: " + widget.salon.salonCategory,
-              style: GoogleFonts.varelaRound(
-                color: Colors.black,
-                fontWeight: FontWeight.w500,
-                fontSize: 14,
-              )),
+            Text("Tag: " + widget.salon.salonCategory,
+                style: GoogleFonts.varelaRound(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 14,
+                )),
           ],
         ),
       ),

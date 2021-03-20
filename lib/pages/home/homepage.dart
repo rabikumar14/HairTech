@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
-import 'package:hair_salon/dev_adminside/post.dart';
 import 'package:hair_salon/firebase_services/google_sign_in.dart';
 import 'package:hair_salon/global_items/package_export.dart';
 import 'package:hair_salon/global_items/widget_export.dart';
@@ -28,8 +27,8 @@ class _HomePageState extends State<HomePage> {
   ];
 
   List<String> stringPath = [
-'images/female-hair-cut-with-scissors.svg',
-  'images/comb-and-long-hair-1.svg',
+    'images/female-hair-cut-with-scissors.svg',
+    'images/comb-and-long-hair-1.svg',
     'images/professional-hair-treatment-with-creams-and-heating-standing-hairdryer.svg',
     'images/chair-and-sink-tools-for-wash-hair-at-the-salon.svg',
     'images/brush-tool.svg',
@@ -38,7 +37,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final salons = Provider.of<List<Salon>>(context);
-      final products = Provider.of<List<Product>>(context);
+    final products = Provider.of<List<Product>>(context);
     final user = FirebaseAuth.instance.currentUser;
     String appbarTitle = user == null
         ? "Welcome to BeautTech"
@@ -71,13 +70,11 @@ class _HomePageState extends State<HomePage> {
                     itemCount: stringItem.length,
                     itemBuilder: (BuildContext context, int index) {
                       String listViewSalonTypes = stringItem[index];
-
                       return InkWell(
                         onTap: () {
                           setState(() {
                             serviceCategory = listViewSalonTypes;
                             isSelected = listViewSalonTypes;
-                            
                           });
                         },
                         child: Container(
@@ -94,8 +91,6 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            // OfferCarousel()
-
             SizedBox(height: 15),
 
             if (FirebaseAuth.instance.currentUser == null)
@@ -106,7 +101,6 @@ class _HomePageState extends State<HomePage> {
               ))
             else
               Container(),
-
             // Padding(
             //   padding: const EdgeInsets.only(bottom: 15, left: 10, right: 10),
             //   child: TextButton.icon(
@@ -125,7 +119,6 @@ class _HomePageState extends State<HomePage> {
             //     },
             //   ),
             // ),
-
             Container(
               child: Flexible(
                 child: ListView.builder(
@@ -135,8 +128,8 @@ class _HomePageState extends State<HomePage> {
                   itemBuilder: (BuildContext context, int index) {
                     Salon listViewSalon = salons[index];
 
-                    if (isSelected != "All" && listViewSalon.salonCategory == isSelected) {
-                      
+                    if (isSelected != "All" &&
+                        listViewSalon.salonCategory == isSelected) {
                       return OutletCard(
                         salon: listViewSalon,
                       );
@@ -144,10 +137,8 @@ class _HomePageState extends State<HomePage> {
                       return OutletCard(
                         salon: listViewSalon,
                       );
-                    
-                    }
-                    else {
-                        return Container();
+                    } else {
+                      return Container();
                     }
                   },
                 ),

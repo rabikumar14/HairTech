@@ -1,18 +1,19 @@
-import { UserRecord } from "firebase-functions/lib/providers/auth";
-import { CallableContext } from "firebase-functions/lib/providers/https";
+import {UserRecord} from "firebase-functions/lib/providers/auth";
+import {CallableContext} from "firebase-functions/lib/providers/https";
 import * as functions from "firebase-functions";
 import * as logging from "@google-cloud/logging";
-import { ApiResponse } from "@google-cloud/logging/build/src/log";
+import {ApiResponse} from "@google-cloud/logging/build/src/log";
 import * as firebase_admin from "firebase-admin";
 import Stripe from 'stripe';
 import paymentIntents from "stripe";
-// @ts-ignore
+
 
 
 const logger = new logging.Logging();
 const region = "asia-east2";
 const memory = "128MB";
 export const admin = firebase_admin.initializeApp();
+// @ts-ignore
 export const db = admin.firestore();
 export const stripe = new Stripe('sk_test_51H6mH9ID8MNBX0WyUM0iOJdAyrBXVA1tqikceRMgJdoUQ8zcRo7PJc8FLmnDpGSWpp6Z8y346rjyU7LbbzYfywJz003Hll1nXL', {
     apiVersion: '2020-08-27'
@@ -62,14 +63,14 @@ export function onCall(handler: (data: any, context: functions.https.CallableCon
  * @param context
  */
 export function getRequestingUserId(context: CallableContext) {
-    // context.auth is undefined when running in the emulator, provide a default uid
+  
     return context.auth === undefined ? 'SOOeDEEz0lWM3TxwegdD0d99bCA3' : context.auth.uid;
 }
 
 // noinspection JSUnusedGlobalSymbols
 export async function getStripeCustomerId(userId: string): Promise<string> {
 
-    //return Promise.resolve("cus_Hiroj8Zq2CeGNV");
+
     const user = await admin.auth().getUser(userId);
     // @ts-ignore
     return getStripeCustomerIdForUser(user);
