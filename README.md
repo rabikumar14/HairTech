@@ -1,16 +1,18 @@
-# hair_salon
+HairTech - FYP project (Flutter)
 
-Hair Salon
+Contributers (Varun Bhalerao, Rabi Kumar)
 
-## Getting Started
+A salon application with the following features:
+  - appointment booking
+  - buying salon products (using stripe)
+  - google sign in
+  - admin functionality (dev and salon side)
 
-This project is a starting point for a Flutter application.
+Tech Stack:
+  - Flutter
+  - Firebase Auth
+  - Firestore
+  - Cloud Function (Typescript)
+  - Stripe Payment
+  - Sendgrid Email Services
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
