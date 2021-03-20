@@ -1,8 +1,0 @@
-{
-  "dependencies": {
-    "@google-cloud/logging": "^9.1.0",
-    "@sendgrid/mail": "^7.4.2",
-    "@types/stripe": "^8.0.417",
-    "stripe": "^8.138.0"
-  }
-}
