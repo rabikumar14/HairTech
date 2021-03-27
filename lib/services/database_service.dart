@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:hair_salon/models/appointment.dart';
-import 'package:hair_salon/models/category.dart';
-import 'package:hair_salon/models/order.dart';
-import 'package:hair_salon/models/product.dart';
-import 'package:hair_salon/models/salon.dart';
+import 'package:Beautech/models/appointment.dart';
+import 'package:Beautech/models/category.dart';
+import 'package:Beautech/models/order.dart';
+import 'package:Beautech/models/product.dart';
+import 'package:Beautech/models/salon.dart';
 
 Stream<List<Product>> products() {
   return ProductCollection().collection.snapshots().map((snapshot) {
@@ -26,7 +26,7 @@ Stream<List<ProductOrder>> order() {
 }
 
 Stream<List<Appointment>> appointment() {
-  return OrderCollection().collection.snapshots().map((snapshot) {
+  return AppointmentCollection().collection.snapshots().map((snapshot) {
     return snapshot.docs.map((doc) => Appointment.fromDocument(doc)).toList();
   });
 }

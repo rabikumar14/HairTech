@@ -17,9 +17,9 @@ export async function setupUserHandler(user: UserRecord) {
   // TODO: use data from login provider
   return admin.firestore().collection("user").doc(user.uid).set({
     stripeId: customer.id,
-    name: user.displayName,
-    email: user.email,
-    phoneNumber: user.phoneNumber,
-    photoUrl: user.photoURL,
+    appUserName: user.displayName,
+    appUserEmail: user.email,
+    appUseePhoneNumber: user.phoneNumber,
+    appUserProfilePic: user.photoURL,
   }, {merge: true});
 }

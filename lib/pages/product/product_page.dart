@@ -1,9 +1,11 @@
-import 'package:hair_salon/global_items/breakpoints.dart';
-import 'package:hair_salon/global_items/package_export.dart';
-import 'package:hair_salon/global_items/widget_export.dart';
-import 'package:hair_salon/models/product.dart';
-import 'package:hair_salon/pages/page_export.dart';
-import 'package:hair_salon/pages/product/product_export.dart';
+
+import 'package:Beautech/global/breakpoints.dart';
+import 'package:Beautech/global/package_export.dart';
+import 'package:Beautech/global/widget_export.dart';
+import 'package:Beautech/models/product.dart';
+import 'package:Beautech/pages/page_export.dart';
+import 'package:Beautech/pages/product/product_export.dart';
+import 'package:flutter/material.dart';
 
 class ProductPage extends StatefulWidget {
   ProductPage({Key key}) : super(key: key);
@@ -45,13 +47,7 @@ class _ProductPageState extends State<ProductPage> with WidgetsBindingObserver {
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: GlobalAppBar('Our Products', action: [
-        AppBarAction(
-          Icons.shopping_cart,
-          route: () {
-            Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => CartPage()));
-          },
-        )
+
       ]),
       body: DefaultTabController(
         length: 4,

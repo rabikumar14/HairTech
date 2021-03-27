@@ -1,9 +1,12 @@
+import 'package:Beautech/admin/dev_adminside/product_data_table.dart';
+import 'package:Beautech/admin/dev_adminside/salon_data_table.dart';
+import 'package:Beautech/global/breakpoints.dart';
+import 'package:Beautech/pages/account/account_page.dart';
+import 'package:Beautech/pages/appointment/appt_page.dart';
+import 'package:Beautech/pages/home/homepage.dart';
+import 'package:Beautech/pages/product/product_page.dart';
 import 'package:flutter/material.dart';
 
-import 'package:hair_salon/pages/account/account_page.dart';
-import 'package:hair_salon/pages/appointment/appt_page.dart';
-import 'package:hair_salon/pages/home/homepage.dart';
-import 'package:hair_salon/pages/product/product_page.dart';
 
 class SideNavRail extends StatefulWidget {
   SideNavRail({Key key, this.title}) : super(key: key);
@@ -18,10 +21,9 @@ class _SideNavRailState extends State<SideNavRail> {
   int _selectedIndex = 0;
 
     List<Widget> pages = [
-    HomePage(),
-    ProductPage(),
-    ApptPage(),
-    Account(),
+    ProductDataTable(),
+    SalonDataTable(),
+  
   ];
 
   @override
@@ -31,7 +33,7 @@ class _SideNavRailState extends State<SideNavRail> {
       children: [
         NavigationRail(
       
-          extended: true,
+          extended: isDisplayDesktop(context) ==  true ? true : false ,
           selectedIndex: _selectedIndex,
           onDestinationSelected: (int index) {
             setState(() {
@@ -49,16 +51,7 @@ class _SideNavRailState extends State<SideNavRail> {
               selectedIcon: Icon(Icons.book),
               label: Text('Second'),
             ),
-            NavigationRailDestination(
-              icon: Icon(Icons.star_border),
-              selectedIcon: Icon(Icons.star),
-              label: Text('Third'),
-            ),
-            NavigationRailDestination(
-              icon: Icon(Icons.star_border),
-              selectedIcon: Icon(Icons.star),
-              label: Text('Third'),
-            ),
+           
           ],
         ),
         const VerticalDivider(thickness: 1, width: 1),

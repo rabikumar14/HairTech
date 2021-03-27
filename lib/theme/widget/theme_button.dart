@@ -1,5 +1,7 @@
-import 'package:hair_salon/global_items/package_export.dart';
-import 'package:hair_salon/pages/theme/widget/theme_notifier.dart';
+import 'package:Beautech/theme/theme_export.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 
 class ThemeButton extends StatelessWidget {
   final ThemeData buttonThemeData;

@@ -1,4 +1,5 @@
-import 'package:hair_salon/global_items/package_export.dart';
+import 'package:flutter/material.dart';
+
 
 /// A beautiful and animated bottom navigation that paints a rounded shape
 /// around its [items] to provide a wonderful look.

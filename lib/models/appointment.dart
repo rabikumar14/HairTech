@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:Beautech/models/salon.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 
@@ -113,7 +114,7 @@ class Appointment {
 
 factory Appointment.fromDocument(DocumentSnapshot document) {
     return Appointment(
-      appointmentID: document.data()['appointmentID'],
+      appointmentID: document.id,
       appointmentService: document.data()['appointmentService'],
       appointmentSalonName: document.data()['appointmentSalonName'],
       appointmentSalonID: document.data()['appointmentSalonID'],

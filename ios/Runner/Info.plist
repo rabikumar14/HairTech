@@ -32,8 +32,9 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>CFBundleURLTypes</key>
-    <array>
+
+     <key>CFBundleURLTypes</key>
+	 <array>
         <dict>
         <key>CFBundleTypeRole</key>
         <string>Editor</string>
@@ -42,22 +43,12 @@
         <key>CFBundleURLSchemes</key>
         <array>
             <string>stripesdk</string>
+			<string>com.googleusercontent.apps.992184450918-97032576ohlu91pimb8k1lhbgaerc6b8</string>
         </array>
         </dict>
     </array>
-	<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>CFBundleURLSchemes</key>
-				<array>
-			<!-- TODO Replace this value: -->
-			<!-- Copied from GoogleService-Info.plist key REVERSED_CLIENT_ID -->
-				<string>com.googleusercontent.apps.992184450918-97032576ohlu91pimb8k1lhbgaerc6b8</string>
-				</array>
-		</dict>
-	</array>
+
+
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
@@ -69,8 +60,10 @@
 	<false/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
-	    <key>NSAllowArbitraryLoads</key>
-	    <true/>
+		<key>NSAllowsLocalNetworking</key>
+		<true/>
+		<key>NSAllowArbitraryLoads</key>
+		<true/>
 	</dict>
 </dict>
 </plist>

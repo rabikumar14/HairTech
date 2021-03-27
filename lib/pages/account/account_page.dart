@@ -1,11 +1,14 @@
+import 'package:Beautech/global/package_export.dart';
+import 'package:Beautech/global/widget_export.dart';
+import 'package:Beautech/models/user.dart';
+import 'package:Beautech/pages/account/widget/history_card.dart';
+import 'package:Beautech/pages/account/widget/misc_card.dart';
+import 'package:Beautech/pages/account/widget/profile_card.dart';
+import 'package:Beautech/pages/account/widget/setting_card.dart';
+import 'package:Beautech/services/firebase_services/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:hair_salon/firebase_services/google_sign_in.dart';
-import 'package:hair_salon/global_items/package_export.dart';
-import 'package:hair_salon/global_items/widget_export.dart';
-import 'package:hair_salon/pages/account/widget/history_card.dart';
-import 'package:hair_salon/pages/account/widget/misc_card.dart';
-import 'package:hair_salon/pages/account/widget/profile_card.dart';
-import 'package:hair_salon/pages/account/widget/setting_card.dart';
+import 'package:flutter/material.dart';
+
 
 class Account extends StatefulWidget {
   @override
@@ -15,7 +18,8 @@ class Account extends StatefulWidget {
 class _AccountState extends State<Account> {
   @override
   Widget build(BuildContext context) {
-        final user = FirebaseAuth.instance.currentUser;
+    final appUser = Provider.of<AppUser>(context);
+    final user = FirebaseAuth.instance.currentUser;
     return Scaffold(
       appBar: GlobalAppBar("Your Account",   action:  user == null ? [] :[
           Padding(

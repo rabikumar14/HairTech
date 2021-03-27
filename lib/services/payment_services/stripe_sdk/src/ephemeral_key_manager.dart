@@ -80,6 +80,7 @@ class EphemeralKeyManager {
     if (_shouldRefreshKey()) {
       String key;
       try {
+
         key = await ephemeralKeyProvider(DEFAULT_API_VERSION);
       } catch (error) {
         log(error);

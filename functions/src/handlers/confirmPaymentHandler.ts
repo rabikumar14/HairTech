@@ -7,7 +7,7 @@ export async function confirmPaymentHandler(data: any, context: functions.https.
   const reservation = await admin.firestore().collection("reservations").doc(data.reservationId).get();
   const paymentIntentId = reservation.get("paymentIntent");
   const paymentData: paymentIntents.PaymentIntentConfirmParams = {};
-  paymentData.return_url = "stripesdk://3ds.stripesdk.io";
+  paymentData.return_url = "stripesdk://com.errorstacker.hairSalon";
   if ("paymentMethodId" in data) paymentData.payment_method = data.paymentMethodId;
   // todo: confirm on client first
   const intent = await stripe.paymentIntents.confirm(

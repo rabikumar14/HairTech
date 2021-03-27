@@ -1,4 +1,4 @@
-import 'package:hair_salon/global_items/package_export.dart';
+import 'package:flutter/material.dart';
 
 class StarRating extends StatelessWidget {
   final void Function(int index) onChanged;

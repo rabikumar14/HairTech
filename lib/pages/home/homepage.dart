@@ -1,12 +1,32 @@
+import 'package:Beautech/global/package_export.dart';
+import 'package:Beautech/global/widget_export.dart';
+import 'package:Beautech/global_data.dart';
+import 'package:Beautech/models/product.dart';
+import 'package:Beautech/models/salon.dart';
+import 'package:Beautech/models/user.dart';
+import 'package:Beautech/pages/home/widget/services_offered.dart';
+import 'package:Beautech/services/crud_model.dart';
+import 'package:Beautech/services/firebase_services/google_sign_in.dart';
+import 'package:Beautech/services/payment_services/stripe_sdk/stripe_sdk.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
-import 'package:hair_salon/firebase_services/google_sign_in.dart';
-import 'package:hair_salon/global_items/package_export.dart';
-import 'package:hair_salon/global_items/widget_export.dart';
-import 'package:hair_salon/models/product.dart';
-import 'package:hair_salon/models/salon.dart';
-import 'package:hair_salon/pages/home/widget/outlet_card.dart';
-import 'package:hair_salon/pages/home/widget/services_offered.dart';
+
+import 'widget/outlet_card.dart';
+
+class StreamUserData extends StatelessWidget {
+  final Widget widget;
+
+  const StreamUserData({Key key, this.widget}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    final streamAppUser = Provider.of<Stream<AppUser>>(context);
+    return StreamProvider<AppUser>(
+        create: (_) => CRUD().streamAppUser(FirebaseAuth.instance.currentUser.uid), initialData: null, child: widget);
+  }
+}
 
 class HomePage extends StatefulWidget {
   @override
@@ -37,7 +57,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final salons = Provider.of<List<Salon>>(context);
-    final products = Provider.of<List<Product>>(context);
+ 
+      
     final user = FirebaseAuth.instance.currentUser;
     String appbarTitle = user == null
         ? "Welcome to BeautTech"
@@ -92,7 +113,6 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             SizedBox(height: 15),
-
             if (FirebaseAuth.instance.currentUser == null)
               Center(
                   child: Padding(
@@ -105,7 +125,7 @@ class _HomePageState extends State<HomePage> {
             //   padding: const EdgeInsets.only(bottom: 15, left: 10, right: 10),
             //   child: TextButton.icon(
             //     label: Text(
-            //       'Add New Salon',
+            //       'Payment test',
             //       style: TextStyle(fontSize: 20, color: Colors.white),
             //     ),
             //     icon: Icon(
@@ -113,9 +133,29 @@ class _HomePageState extends State<HomePage> {
             //       color: Colors.white,
             //     ),
             //     style: TextButton.styleFrom(backgroundColor: Colors.blue),
-            //     onPressed: () {
-            //       addProductToFirebase();
-            //      // addSalonToFirebase();
+            //     onPressed: () async {
+             
+            //       //         print("ahafafafafafa");
+            //       final HttpsCallable callable =
+            //           CloudFunctions.instance.getHttpsCallable(
+            //         functionName: 'createAutomaticPaymentIntentHandler',
+            //       );
+            //       //         var document = await FirebaseFirestore.instance
+            //       //             .collection('user')
+            //       //             .doc(user.uid)
+            //       //             .get();
+            //       final response = await callable.call({'amount': 10000});
+            //       final result = await Stripe.instance.confirmPayment(
+            //           response.data["clientSecret"],
+            //           paymentMethodId: 'pm_card_threeDSecure2Required');
+            //       if (result['status'] == 'succeeded') {
+            //         // TODO: success
+            //         debugPrint('Success after authentication.');
+            //         return;
+            //       } else {
+            //         debugPrint('Error');
+            //       }
+            //       // addSalonToFirebase();
             //     },
             //   ),
             // ),
@@ -127,7 +167,6 @@ class _HomePageState extends State<HomePage> {
                   itemCount: salons.length,
                   itemBuilder: (BuildContext context, int index) {
                     Salon listViewSalon = salons[index];
-
                     if (isSelected != "All" &&
                         listViewSalon.salonCategory == isSelected) {
                       return OutletCard(

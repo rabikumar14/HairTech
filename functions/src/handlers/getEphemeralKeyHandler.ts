@@ -5,13 +5,13 @@ export async function getEphemeralKeyHandler(data: any, context: functions.https
   const apiVersion = data.stripeVersion;
   const customerId = await getStripeCustomerId(getRequestingUserId(context));
   if (customerId === null) {
-    throw new functions.https.HttpsError("failed-precondition", "User has no Stripe ID");
+      throw new functions.https.HttpsError('failed-precondition', "User has no Stripe ID");
   }
   if (apiVersion === undefined) {
-    throw new functions.https.HttpsError("invalid-argument", "stripe_version must be specified to create an ephemeral key");
+      throw new functions.https.HttpsError('invalid-argument', "stripe_version must be specified to create an ephemeral key");
   }
   const key = await stripe.ephemeralKeys.create(
       {customer: customerId},
       {stripe_version: apiVersion});
-  return {key: key};
+  return {key: key}
 }

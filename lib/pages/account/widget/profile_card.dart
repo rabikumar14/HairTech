@@ -1,115 +1,197 @@
-import 'package:hair_salon/global_items/package_export.dart';
-import 'package:hair_salon/global_items/widget_export.dart';
-import 'package:hair_salon/pages/account/edit_account_page.dart';
+import 'package:Beautech/global/widget_export.dart';
+import 'package:Beautech/models/user.dart';
+import 'package:Beautech/pages/account/edit_account_page.dart';
+import 'package:Beautech/services/crud_model.dart';
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
-class ProfileCard extends StatelessWidget {
+class ProfileCard extends StatefulWidget {
+  @override
+  _ProfileCardState createState() => _ProfileCardState();
+}
+
+class _ProfileCardState extends State<ProfileCard> {
+  final _formKey = GlobalKey<FormState>();
+
+  TextEditingController addressEditingController = new TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    final appUser = Provider.of<AppUser>(context);
+
+    showAddressUpdateDialog() {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(
+              appUser.appUserAddress == ""
+                  ? "Add your address"
+                  : "Edit your address",
+              style: GoogleFonts.varelaRound(
+                  fontSize: 16,
+                  color: Colors.pink[500],
+                  fontWeight: FontWeight.w500),
+              overflow: TextOverflow.ellipsis,
+            ),
+            content: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextFormField(
+                    maxLines: null,
+                    keyboardType: TextInputType.multiline,
+                    controller: addressEditingController
+                      ..text = appUser.appUserAddress,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'You cannot leave this field empty';
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                      focusColor: Colors.pink[500],
+          
+                      hintText: "Flat No, Street, Post Code",
+                      labelText: "Your Address",
+                    ),
+                  ),
+                  SizedBox(height: 15),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      OutlinedButton(
+                        onPressed: () async {
+                          if (_formKey.currentState.validate()) {
+                            await CRUD()
+                                .updateAddress(appUser.appUserID,
+                                    addressEditingController.text)
+                                .then((value) => Navigator.of(context).pop());
+                          }
+                        },
+                        child: Text(
+                          "Save",
+                          style: GoogleFonts.varelaRound(
+                              fontSize: 16,
+                              color: Colors.pink[500],
+                              fontWeight: FontWeight.w500),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      OutlinedButton(
+                        onPressed: () async {
+                          Navigator.of(context).pop();
+                        },
+                        child: Text(
+                          "Cancel",
+                          style: GoogleFonts.varelaRound(
+                              fontSize: 16,
+                              color: Colors.pink[500],
+                              fontWeight: FontWeight.w500),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      )
+                    ],
+                  )
+                ],
+              ),
+            ),
+          );
+        },
+      );
+    }
+
     return Stack(
       children: [
         Container(
           margin: EdgeInsets.only(
-            top: 30,
+            top: 15,
           ),
-          child: FancyCard(
-            Column(
-              children: [
-                Container(
-                  padding: EdgeInsets.fromLTRB(115, 0, 0, 15),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: <Widget>[
-                      textFont(
-                        "Shwe Best Leader",
-                        Theme.of(context).primaryColor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
+          child: Card(
+            elevation: 4,
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Column(
+                children: [
+                  Container(
+                    padding: EdgeInsets.fromLTRB(90, 0, 0, 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        textFont(
+                          appUser.appUserName,
+                          Theme.of(context).primaryColor,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        textFont(
+                            appUser.appUserEmail, Theme.of(context).accentColor,
+                            maxLines: 1, overflow: TextOverflow.ellipsis)
+                      ],
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          children: [
+                            textFont('Current Address:',
+                                Theme.of(context).accentColor,
+                                fontWeight: FontWeight.bold, fontSize: 14),
+                            Divider(
+                                indent: 18,
+                                endIndent: 18,
+                                color: Theme.of(context).primaryColor),
+                            Text(
+                              appUser.appUserAddress == ""
+                                  ? "Please add a default address"
+                                  : appUser.appUserAddress,
+                              style: GoogleFonts.varelaRound(
+                                  fontSize: 14,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w500),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
+                        ),
                       ),
-                      SizedBox(
-                        height: 15,
+                      Container(
+                        padding: EdgeInsets.all(10),
+                        child: OutlinedButton(
+                          child: textFont(
+                            appUser.appUserAddress == "" ? "Add" : "Edit",
+                            Theme.of(context).primaryColor,
+                          ),
+                          onPressed: () {
+                            showAddressUpdateDialog();
+                          },
+                        ),
                       ),
-                      textFont('shwebestleader@gmail.com.sg',
-                          Theme.of(context).accentColor,
-                          maxLines: 1, overflow: TextOverflow.ellipsis)
                     ],
                   ),
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        children: [
-                          textFont('Gender', Theme.of(context).accentColor,
-                              fontWeight: FontWeight.bold),
-                          Divider(
-                              indent: 18,
-                              endIndent: 18,
-                              color: Theme.of(context).primaryColor),
-                          textFont('Female', Theme.of(context).accentColor)
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      child: Column(
-                        children: [
-                          textFont('Age', Theme.of(context).accentColor,
-                              fontWeight: FontWeight.bold),
-                          Divider(
-                              indent: 28,
-                              endIndent: 28,
-                              color: Theme.of(context).primaryColor),
-                          textFont('12', Theme.of(context).accentColor)
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      child: Column(
-                        children: [
-                          textFont('Contact', Theme.of(context).accentColor,
-                              fontWeight: FontWeight.bold),
-                          Divider(
-                            indent: 17,
-                            endIndent: 17,
-                            color: Theme.of(context).primaryColor,
-                          ),
-                          textFont('12345678', Theme.of(context).accentColor)
-                        ],
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(10),
-                      child: OutlinedButton(
-                        child: textFont(
-                          'Edit',
-                          Theme.of(context).primaryColor,
-                        ),
-                        onPressed: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => EditAccount(),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
         Container(
-          height: 100,
-          width: 100,
+          height: 75,
+          width: 75,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(20),
             image: DecorationImage(
               fit: BoxFit.cover,
-              image: NetworkImage(
-                  'https://scontent.fsin9-2.fna.fbcdn.net/v/t1.0-9/74661747_1442722825865598_5378789738956193792_o.jpg?_nc_cat=100&ccb=3&_nc_sid=0debeb&_nc_ohc=fbtwuwDIOTQAX-2n03t&_nc_ht=scontent.fsin9-2.fna&oh=0672c6ae6418fa287ae3f1a2eafaeb47&oe=60631900'),
+              image: NetworkImage(appUser.appUserProfilePic),
             ),
           ),
-          margin: EdgeInsets.only(left: 20),
+          margin: EdgeInsets.only(
+            left: 18,
+          ),
         )
       ],
     );

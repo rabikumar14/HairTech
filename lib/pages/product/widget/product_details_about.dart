@@ -1,5 +1,6 @@
-import 'package:hair_salon/global_items/package_export.dart';
-import 'package:hair_salon/global_items/widget_export.dart';
+
+import 'package:Beautech/global/widget_export.dart';
+import 'package:flutter/material.dart';
 
 class ProductDetailsAbout extends StatelessWidget {
   final description =

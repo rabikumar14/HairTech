@@ -10,12 +10,11 @@ import paymentIntents from "stripe";
 
 
 const logger = new logging.Logging();
-const region = "asia-east2";
+
 const memory = "128MB";
 export const admin = firebase_admin.initializeApp();
-// @ts-ignore
 export const db = admin.firestore();
-export const stripe = new Stripe('sk_test_51H6mH9ID8MNBX0WyUM0iOJdAyrBXVA1tqikceRMgJdoUQ8zcRo7PJc8FLmnDpGSWpp6Z8y346rjyU7LbbzYfywJz003Hll1nXL', {
+export const stripe = new Stripe('sk_test_51IYAezDzzwMCjHARQrevkeA8uMdUCL7IYF4EVD3cvaqEuIpKIE3W8jrEKGWc5DMDpCTerG6PiVIRExXiL2CD7Tm100fosQUO33', {
     apiVersion: '2020-08-27'
 });
 
@@ -55,7 +54,7 @@ export function intentToStatus(intent: paymentIntents.PaymentIntent): Reservatio
  * @param handler The call handler
  */
 export function onCall(handler: (data: any, context: functions.https.CallableContext) => any) {
-    return functions.runWith({ memory: memory }).region(region).https.onCall(handler);
+    return functions.runWith({ memory: memory }).https.onCall(handler);
 }
 
 /**
