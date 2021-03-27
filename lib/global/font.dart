@@ -1,4 +1,6 @@
-import 'package:hair_salon/global_items/package_export.dart';
+import 'package:Beautech/global/package_export.dart';
+import 'package:flutter/material.dart';
+
 
 final customFont = GoogleFonts.varelaRound(
   fontWeight: FontWeight.w600,

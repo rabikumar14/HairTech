@@ -1,7 +1,12 @@
+import 'package:Beautech/global/app_bar/app_bar.dart';
+import 'package:Beautech/models/user.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hair_salon/global_items/app_bar/app_bar.dart';
-import 'package:hair_salon/models/product.dart';
+
+import 'package:Beautech/models/product.dart';
+import 'package:scoped_model/scoped_model.dart';
+
 class ProductDetails extends StatefulWidget {
   final Product product;
   const ProductDetails({Key key, this.product}) : super(key: key);
@@ -12,48 +17,73 @@ class ProductDetails extends StatefulWidget {
 class _ProductDetailsState extends State<ProductDetails> {
   final description =
       'Styling, heat tools, and humidity can all dry out your curls. Lock-in moisture with TRESemmé Pro Care Curls Conditioner, designed to help protect your curls from frizz and humidity.';
-
+  int numberOfItems = 0;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: GlobalAppBar("Product Details", color: Colors.grey[200],),
-      floatingActionButton: Builder(
-        builder: (BuildContext context) {
-         
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: FloatingActionButton.extended(
-              onPressed: () {
-         
-              },
-              icon: Icon(Icons.add),
-              label: Text(
-                "Add to Cart",
-                style: TextStyle(color: Colors.white),
+    return ScopedModelDescendant<AppUser>(builder: (context, child, model) {
+      int index = model.cart.indexWhere(
+          (element) => element.documentId == widget.product.documentId);
+
+      if (index >= 0) {
+        numberOfItems = model.cart[index].qty;
+      }
+
+      return Scaffold(
+        appBar: GlobalAppBar(
+          "Product Details",
+          color: Colors.grey[200],
+        ),
+        floatingActionButton: Builder(
+          builder: (BuildContext context) {
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: FloatingActionButton.extended(
+                onPressed: () {
+                  if (FirebaseAuth.instance.currentUser == null) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text('You need to be logged in to add to cart'),
+                      duration: Duration(seconds: 1),
+                    ));
+                  }
+                  else{
+   model.addProduct(widget.product);
+
+                  setState(() {
+                    numberOfItems = model.cart[index].qty;
+                  });
+                  }
+               
+                  // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(widget.product.productName +  " added to cart"), duration: Duration(seconds: 2),));
+                },
+                icon: Icon(Icons.add),
+                label: Text(
+                  numberOfItems <= 0
+                      ? "Add to Cart"
+                      : "Add to Cart " + "( " + numberOfItems.toString() + " )",
+                  style: TextStyle(color: Colors.white),
+                ),
+                backgroundColor: Colors.black,
               ),
-              backgroundColor: Colors.black,
-            ),
-          );
-        },
-      ),
-   
-      
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            _buildProductImage(),
-            _buildAbout(),
-            
+            );
+          },
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              _buildProductImage(),
+              _buildAbout(),
+
               //  Row(mainAxisAlignment: MainAxisAlignment.center,
               //    children: [
               //      CartCounter(),
               //    ],
               //  ),
-          ],
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
 
   _buildProductImage() {
@@ -175,7 +205,6 @@ class _ProductDetailsState extends State<ProductDetails> {
               Text("Add to Cart",
                   style: GoogleFonts.varelaRound(
                     color: Colors.white,
-                
                     fontSize: 16,
                   ))
             ],

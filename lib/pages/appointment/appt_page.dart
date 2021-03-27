@@ -1,7 +1,12 @@
-import 'package:hair_salon/global_items/package_export.dart';
-import 'package:hair_salon/global_items/radio_button.dart';
-import 'package:hair_salon/global_items/widget_export.dart';
-import 'package:hair_salon/models/salon.dart';
+import 'package:Beautech/global/package_export.dart';
+import 'package:Beautech/global/radio_button.dart';
+import 'package:Beautech/global/widget_export.dart';
+import 'package:Beautech/global_data.dart';
+import 'package:Beautech/pages/confirm/confrim_appointment.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+
+import 'package:Beautech/models/salon.dart';
 import 'package:intl/intl.dart';
 
 class ApptPage extends StatefulWidget {
@@ -340,10 +345,51 @@ class _ApptPageState extends State<ApptPage> {
                   'Confirm booking',
                   style: TextStyle(color: Colors.white),
                 ),
-                onPressed: () {
-                  if(selectedTimeSlot == "(Select Time)" || outletValue == "(Select Outlet)"){
-                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Please select the time and outlet'), duration: Duration(seconds: 2),));
+                onPressed: () async {
+                  if (selectedTimeSlot == "(Select Time)" ||
+                      outletValue == "(Select Outlet)") {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text('Please select the time and outlet'),
+                      duration: Duration(seconds: 2),
+                    ));
+                  } else {
+                               String month = months[
+                      DateTime.now().add(Duration(days: int.parse(pos))).month -
+                          1];
+                  String year = DateTime.now()
+                      .add(Duration(days: int.parse(pos)))
+                      .year
+                      .toString();
+                  DateFormat inputFormat = DateFormat("dd-MMMM-yyyy HH:mm a");
+                  DateTime dateTime = inputFormat.parse(selectDate +
+                      "-" +
+                      month +
+                      "-" +
+                      year +
+                      " " +
+                      selectedTimeSlot);
+                  var outputFormat = DateFormat('dd MMMM yyyy, hh:mm a');
+                  var outputDate = outputFormat.format(dateTime);
+                  int cost = (double.parse(widget.salonServices.serviceCost
+                              .toStringAsFixed(2)) *
+                          100)
+                      .toInt();
+
+                  await createAutomaticPaymentIntentAppointment(
+                          context,
+                          cost,
+                          widget.salonServices,
+                          outletValue,
+                          widget.salon,
+                          FirebaseAuth.instance.currentUser,
+                          dateTime)
+                      .then((value) {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => ConfirmAppointment()));
+                  });
                   }
+
+       
                 },
               ),
             ),

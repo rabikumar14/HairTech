@@ -1,7 +1,9 @@
-import 'package:hair_salon/global_items/breakpoints.dart';
-import 'package:hair_salon/global_items/package_export.dart';
-import 'package:hair_salon/models/salon.dart';
-import 'package:hair_salon/pages/services/salon_service.dart';
+
+import 'package:Beautech/global/breakpoints.dart';
+import 'package:Beautech/global/package_export.dart';
+import 'package:Beautech/models/salon.dart';
+import 'package:Beautech/pages/salon_services/salon_service.dart';
+import 'package:flutter/material.dart';
 
 class OutletCard extends StatefulWidget {
   final String bgImage;

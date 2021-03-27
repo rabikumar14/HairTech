@@ -174,13 +174,14 @@ class Stripe {
           await sub.cancel();
           final intent = await callback(uri);
           completer.complete(intent);
+          closeWebView();
         }
       });
     } else {
       completer.complete({});
     }
 
-    await launch(url, webOnlyWindowName: '_self', forceSafariVC: false);
+    await launch(url, webOnlyWindowName: '_self');
     return completer.future;
   }
 }

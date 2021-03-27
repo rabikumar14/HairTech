@@ -1,4 +1,5 @@
-import 'package:hair_salon/global_items/package_export.dart';
+import 'package:Beautech/global/package_export.dart';
+
 
 class AppBarAction extends StatelessWidget {
   final IconData icon;

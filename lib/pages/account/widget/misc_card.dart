@@ -1,24 +1,27 @@
-import 'package:hair_salon/global_items/package_export.dart';
-import 'package:hair_salon/global_items/widget_export.dart';
-import 'package:hair_salon/pages/theme/theme_export.dart';
+
+
+import 'package:Beautech/global/widget_export.dart';
+import 'package:flutter/material.dart';
 
 class MiscCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return FancyCard(
-      Padding(
-        padding: const EdgeInsets.symmetric(vertical: 5),
+    return Card(
+      elevation: 4,
+     child: Padding(
+        padding: const EdgeInsets.all(15),
+        
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             textFont('Misc', Theme.of(context).primaryColor,
-                fontWeight: FontWeight.bold, fontSize: 18),
+                fontSize: 16,      fontWeight: FontWeight.bold,),
             ListTile(
               leading: Icon(
                 Icons.branding_watermark,
               ),
               title:
-                  textFont('Terms & Conditions', Theme.of(context).accentColor),
+                  textFont('Terms & Conditions', Theme.of(context).accentColor, fontSize: 14),
               onTap: () {},
             ),
             CustomDivider(),
@@ -27,7 +30,7 @@ class MiscCard extends StatelessWidget {
                 Icons.supervised_user_circle_sharp,
               ),
               title:
-                  textFont('Development Team', Theme.of(context).accentColor),
+                  textFont('Development Team', Theme.of(context).accentColor, fontSize: 14),
               onTap: () {},
             ),
           ],

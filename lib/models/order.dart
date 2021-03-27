@@ -1,11 +1,14 @@
+import 'dart:convert';
 
+import 'package:Beautech/models/product.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 
 class ProductOrder {
   String orderId;
   String paymentIntent;
   String paymentMethod;
-  String orderDate;
+  DateTime orderDate;
   String expectedDelivery;
   String latestUpdate;
   String postage;
@@ -14,10 +17,7 @@ class ProductOrder {
   String userId;
   bool helpRequest;
   double orderTotal;
-  List<dynamic> itemsOrdered;
-
-//<editor-fold desc="Data Methods" defaultstate="collapsed">
-
+  List<Product> itemsOrdered;
   ProductOrder({
     this.orderId,
     this.paymentIntent,
@@ -34,35 +34,13 @@ class ProductOrder {
     this.itemsOrdered,
   });
 
-  @override
-  String toString() {
-    return 'Order{orderId: $orderId, paymentIntent: $paymentIntent, paymentMethod: $paymentMethod, orderDate: $orderDate, expectedDelivery: $expectedDelivery, latestUpdate: $latestUpdate, postage: $postage, address: $address, status: $status, userId: $userId, helpRequest: $helpRequest, orderTotal: $orderTotal, itemsOrdered: $itemsOrdered}';
-  }
-
-  factory ProductOrder.fromMap(Map<String, dynamic> map) {
-    return new ProductOrder(
-      orderId: map['orderId'] as String,
-      paymentIntent: map['paymentIntent'] as String,
-      paymentMethod: map['paymentMethod'] as String,
-      orderDate: map['orderDate'] as String,
-      expectedDelivery: map['expectedDelivery'] as String,
-      latestUpdate: map['latestUpdate'] as String,
-      postage: map['postage'] as String,
-      address: map['address'] as String,
-      status: map['status'] as String,
-      userId: map['userId'] as String,
-      helpRequest: map['helpRequest'] as bool,
-      orderTotal: map['orderTotal'] as double,
-      itemsOrdered: map['itemsOrdered'] as List<dynamic>,
-    );
-  }
-
   factory ProductOrder.fromDocument(DocumentSnapshot document) {
-    return new ProductOrder( 
+    return new ProductOrder(
       orderId: document.id,
       paymentIntent: document.data()['paymentIntent'] as String,
       paymentMethod: document.data()['paymentMethod'] as String,
-      orderDate: document.data()['orderDate'] as String,
+      orderDate:
+          DateTime.fromMillisecondsSinceEpoch(document.data()['orderDate']),
       expectedDelivery: document.data()['expectedDelivery'] as String,
       latestUpdate: document['latestUpdate'] as String,
       postage: document.data()['postage'] as String,
@@ -71,29 +49,50 @@ class ProductOrder {
       userId: document.data()['userId'] as String,
       helpRequest: document.data()['helpRequest'] as bool,
       orderTotal: document.data()['orderTotal'] as double,
-      itemsOrdered: document.data()['itemsOrdered'] as List<dynamic>,
+      itemsOrdered: List<Product>.from(
+          document.data()['itemsOrdered'].map((x) => Product.fromMap(x))),
     );
   }
 
   Map<String, dynamic> toMap() {
-    // ignore: unnecessary_cast
     return {
-      'orderId': this.orderId,
-      'paymentIntent': this.paymentIntent,
-      'paymentMethod': this.paymentMethod,
-      'orderDate': this.orderDate,
-      'expectedDelivery': this.expectedDelivery,
-      'latestUpdate': this.latestUpdate,
-      'postage': this.postage,
-      'address': this.address,
-      'status': this.status,
-      'userId': this.userId,
-      'helpRequest': this.helpRequest,
-      'orderTotal': this.orderTotal,
-      'itemsOrdered': this.itemsOrdered,
-    } as Map<String, dynamic>;
+      'orderId': orderId,
+      'paymentIntent': paymentIntent,
+      'paymentMethod': paymentMethod,
+      'orderDate': orderDate.millisecondsSinceEpoch,
+      'expectedDelivery': expectedDelivery,
+      'latestUpdate': latestUpdate,
+      'postage': postage,
+      'address': address,
+      'status': status,
+      'userId': userId,
+      'helpRequest': helpRequest,
+      'orderTotal': orderTotal,
+      'itemsOrdered': itemsOrdered.map((x) => x.toMap()).toList(),
+    };
   }
 
-//</editor-fold>
+  factory ProductOrder.fromMap(Map<String, dynamic> map) {
+    return ProductOrder(
+      orderId: map['orderId'],
+      paymentIntent: map['paymentIntent'],
+      paymentMethod: map['paymentMethod'],
+      orderDate: DateTime.fromMillisecondsSinceEpoch(map['orderDate']),
+      expectedDelivery: map['expectedDelivery'],
+      latestUpdate: map['latestUpdate'],
+      postage: map['postage'],
+      address: map['address'],
+      status: map['status'],
+      userId: map['userId'],
+      helpRequest: map['helpRequest'],
+      orderTotal: map['orderTotal'],
+      itemsOrdered: List<Product>.from(
+          map['itemsOrdered'].map((x) => Product.fromMap(x))),
+    );
+  }
 
+  @override
+  String toString() {
+    return 'ProductOrder(orderId: $orderId, paymentIntent: $paymentIntent, paymentMethod: $paymentMethod, orderDate: $orderDate, expectedDelivery: $expectedDelivery, latestUpdate: $latestUpdate, postage: $postage, address: $address, status: $status, userId: $userId, helpRequest: $helpRequest, orderTotal: $orderTotal, itemsOrdered: $itemsOrdered)';
+  }
 }

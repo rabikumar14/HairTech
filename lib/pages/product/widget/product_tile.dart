@@ -1,7 +1,8 @@
-import 'package:hair_salon/global_items/package_export.dart';
-import 'package:hair_salon/global_items/widget_export.dart';
-import 'package:hair_salon/models/product.dart';
-import 'package:hair_salon/pages/product/product_details_page.dart';
+
+import 'package:Beautech/global/widget_export.dart';
+import 'package:Beautech/models/product.dart';
+import 'package:Beautech/pages/product/product_details_page.dart';
+import 'package:flutter/material.dart';
 
 class ProductTile extends StatelessWidget {
   final Product product;

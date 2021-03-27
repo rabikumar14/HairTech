@@ -17,7 +17,7 @@ dependencies:
   google_fonts: ^1.1.2
   provider: ^4.3.3
   shared_preferences: ^0.5.12+4
-  cloud_functions: ^0.6.0+1
+  cloud_functions: ^0.6.0
   firebase_messaging: ^7.0.3
   cloud_firestore: ^0.14.4
   firebase_auth: ^0.18.4+1

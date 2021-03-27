@@ -1,9 +1,10 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-import 'package:hair_salon/models/product.dart';
+import 'package:Beautech/models/product.dart';
 
 class AppUser extends Model {
   final String appUserID;
@@ -74,11 +75,32 @@ class AppUser extends Model {
       isDev: map['isDev'],
       userCreatedAt: DateTime.fromMillisecondsSinceEpoch(map['userCreatedAt']),
       lastLogin: DateTime.fromMillisecondsSinceEpoch(map['lastLogin']),
-      appUserOtherInfo: List<Map>.from(map['appUserOtherInfo']?.map((x) => x)),
-      appUserSellerInfo: List<Map>.from(map['appUserSellerInfo']?.map((x) => x)),
-      appUserDevInfo: List<Map>.from(map['appUserDevInfo']?.map((x) => x)),
+      appUserOtherInfo: map["appUserOtherInfo"]  as List<Map>,
+      appUserSellerInfo: map["appUserSellerInfo"] as List<Map>,
+      appUserDevInfo:map["appUserDevInfo"] as List<Map>,
     );
   }
+
+
+  factory AppUser.fromDocument(DocumentSnapshot document) {
+    return AppUser(
+      appUserID: document.id,
+      appUserEmail: document.data()['appUserEmail'],
+      appUserProfilePic:  document.data()['appUserProfilePic'],
+      appUserPhoneNumber:  document.data()['appUserPhoneNumber'],
+      appUserName:  document.data()['appUserName'],
+      appUserAddress:  document.data()['appUserAddress'],
+      appUserStripeID:  document.data()['appUserStripeID'],
+      isSeller:  document.data()['isSeller'],
+      isDev:  document.data()['isDev'],
+      userCreatedAt: DateTime.fromMillisecondsSinceEpoch( document.data()['userCreatedAt']),
+      lastLogin: DateTime.fromMillisecondsSinceEpoch( document.data()['lastLogin']),
+      appUserOtherInfo:  document.data()["appUserOtherInfo"]  as List<Map>,
+      appUserSellerInfo:  document.data()["appUserSellerInfo"] as List<Map>,
+      appUserDevInfo: document.data()["appUserDevInfo"] as List<Map>,
+    );
+  }
+
 
 
   @override

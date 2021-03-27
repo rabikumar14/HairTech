@@ -1,5 +1,6 @@
-import 'package:hair_salon/global_items/package_export.dart';
-import 'package:hair_salon/pages/theme/data/theme_data.dart';
+import 'package:Beautech/theme/data/theme_data.dart';
+import 'package:flutter/material.dart';
+
 
 class ThemeNotifier with ChangeNotifier {
   ThemeData _themeData = lightThemePink;

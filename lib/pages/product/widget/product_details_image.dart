@@ -1,5 +1,5 @@
-import 'package:hair_salon/global_items/package_export.dart';
-import 'package:hair_salon/global_items/widget_export.dart';
+
+import 'package:flutter/material.dart';
 
 class ProductDetailsImage extends StatelessWidget {
   @override

@@ -1,8 +1,14 @@
-import 'package:hair_salon/global_items/package_export.dart';
+import 'package:Beautech/global/package_export.dart';
+import 'package:Beautech/models/product.dart';
+import 'package:Beautech/models/user.dart';
 
 import 'font.dart';
 
 class CartCounter extends StatefulWidget {
+  final AppUser cartModel;
+  final Product product;
+
+  CartCounter({Key key, this.cartModel, this.product}) : super(key: key);
   @override
   _CartCounterState createState() => _CartCounterState();
 }
@@ -16,25 +22,21 @@ class _CartCounterState extends State<CartCounter> {
         buildOutlineButton(
           icon: Icons.remove,
           press: () {
-            if (numOfItems > 1) {
-              setState(() {
-                numOfItems--;
-              });
-            }
+            widget.cartModel
+                .updateProduct(widget.product, widget.product.qty - 1);
           },
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: textFont(numOfItems.toString().padLeft(2, "0"),
-              Theme.of(context).accentColor,
-              fontSize: 18),
+          child: textFont(
+              widget.product.qty.toString(), Theme.of(context).accentColor,
+              fontSize: 16),
         ),
         buildOutlineButton(
             icon: Icons.add,
             press: () {
-              setState(() {
-                numOfItems++;
-              });
+              widget.cartModel
+                  .updateProduct(widget.product, widget.product.qty + 1);
             }),
       ],
     );
@@ -42,8 +44,8 @@ class _CartCounterState extends State<CartCounter> {
 
   SizedBox buildOutlineButton({IconData icon, Function press}) {
     return SizedBox(
-      width: 40,
-      height: 32,
+      width: 25,
+      height: 25,
       child: OutlinedButton(
         style: OutlinedButton.styleFrom(
           elevation: 0,
@@ -51,11 +53,14 @@ class _CartCounterState extends State<CartCounter> {
           primary: Theme.of(context).primaryColor,
           padding: EdgeInsets.zero,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(5),
           ),
         ),
         onPressed: press,
-        child: Icon(icon),
+        child: Icon(
+          icon,
+          size: 16,
+        ),
       ),
     );
   }

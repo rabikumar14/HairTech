@@ -1,8 +1,8 @@
+import 'package:Beautech/models/salon.dart';
+import 'package:Beautech/pages/appointment/appt_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hair_salon/global_items/package_export.dart';
-import 'package:hair_salon/models/salon.dart';
-import 'package:hair_salon/pages/appointment/appt_page.dart';
 
 class AllServicesPage extends StatefulWidget {
   final Salon salon;
@@ -140,15 +140,18 @@ class _AllServicesPageState extends State<AllServicesPage>
                           ),
                         ],
                       ),
-
-                      ListTile(title: Text(
+                      ListTile(
+                        title: Text(
                           "Services offered by " + widget.salon.salonName,
                           style: GoogleFonts.varelaRound(
                               fontSize: 16,
                               color: Colors.black,
                               fontWeight: FontWeight.w500),
-                        ),),
-                        SizedBox(height: 10,),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
                       MediaQuery(
                         data: MediaQuery.of(context)
                             .removePadding(removeTop: true),
@@ -248,18 +251,36 @@ class _AllServicesPageState extends State<AllServicesPage>
                       ),
                       SizedBox(height: 10),
                       ElevatedButton(
-                        style:
-                            ElevatedButton.styleFrom(primary: Colors.pink[300]),
+                        style: ElevatedButton.styleFrom(
+                            primary: FirebaseAuth.instance.currentUser == null
+                                ? Colors.black
+                                : Colors.pink[300]),
                         child: Text(
-                          'Select timings and outlets',
+                          FirebaseAuth.instance.currentUser == null
+                              ? 'You need to be logged in to confirm booking'
+                              : 'Select timings and outlets',
                           style: TextStyle(color: Colors.white),
                         ),
                         onPressed: () {
-                          setState(() {   Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ApptPage(salon: widget.salon,salonServices: widget.salon.salonServices[selectedIndex],)),
-                        );});
+                          if (FirebaseAuth.instance.currentUser == null) {
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text(
+                                  'You need to be logged in to confirm booking'),
+                              duration: Duration(seconds: 2),
+                            ));
+                          } else {
+                            setState(() {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ApptPage(
+                                          salon: widget.salon,
+                                          salonServices: widget.salon
+                                              .salonServices[selectedIndex],
+                                        )),
+                              );
+                            });
+                          }
                         },
                       ),
                     ],
