@@ -36,7 +36,7 @@ class _OutletCardState extends State<OutletCard> {
           children: [
             Container(
               width: isDisplayDesktop(context) == true
-                  ? (MediaQuery.of(context).size.width - 300)
+                  ? (MediaQuery.of(context).size.width )
                   : MediaQuery.of(context).size.width * 0.9,
               height: MediaQuery.of(context).size.height * 0.2,
               decoration: BoxDecoration(

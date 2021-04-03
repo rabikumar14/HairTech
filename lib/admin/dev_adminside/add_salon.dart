@@ -1,24 +1,21 @@
-import 'dart:io';
-
 import 'package:Beautech/global/package_export.dart';
 import 'package:Beautech/global/widget_export.dart';
-import 'package:Beautech/models/product.dart';
+
 import 'package:Beautech/models/salon.dart';
 import 'package:Beautech/services/crud_model.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+
+import 'package:Beautech/services/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:permission_handler/permission_handler.dart';
 
-class SalonEditDataTable extends StatefulWidget {
-  final Salon salon;
-
-  const SalonEditDataTable({Key key, this.salon}) : super(key: key);
+class AddNewSalon extends StatefulWidget {
+  const AddNewSalon({Key key}) : super(key: key);
   @override
-  _SalonEditDataTableState createState() => _SalonEditDataTableState();
+  _AddNewSalonState createState() => _AddNewSalonState();
 }
 
-class _SalonEditDataTableState extends State<SalonEditDataTable> {
+class _AddNewSalonState extends State<AddNewSalon> {
   final formKey = GlobalKey<FormState>();
   final updateServiceKey = GlobalKey<FormState>();
   final updateOutletKey = GlobalKey<FormState>();
@@ -62,83 +59,12 @@ class _SalonEditDataTableState extends State<SalonEditDataTable> {
     "9:00 PM"
   ];
 
-  File _image;
-  final picker = ImagePicker();
-
-
-    uploadProfileImage(String imageFile) async {
-      //Check Permissions
-      await Permission.photos.request();
-
-      var permissionStatus = await Permission.photos.status;
-
-      if (permissionStatus.isGranted) {
-        //Select Image
-        var file = File(imageFile);
-
-        if (imageFile != null) {
-          //Upload to Firebase
-          var snapshot = await FirebaseStorage.instance
-              .ref()
-              .child('folderNames/' +
-              imageFile.substring(imageFile.lastIndexOf('/')))
-              .putFile(file)
-              .whenComplete(() => null);
-
-          var downloadUrl = await snapshot.ref.getDownloadURL();
-
-    
-        } else {
-          print('No Path Received');
-        }
-      } else {
-        print('Grant Permissions and try again');
-      }
-    }
-
-
-
-  Future getImageFromCamera() async {
-    final pickedFile = await picker.getImage(source: ImageSource.camera);
-
-    setState(() {
-      if (pickedFile != null) {
-        _image = File(pickedFile.path);
-
-      } else {
-        print('No image selected.');
-      }
-    });
-  }
-
-  Future getImageFromGallery() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
-
-    setState(() {
-      if (pickedFile != null) {
-        _image = File(pickedFile.path);
-      } else {
-        print('No image selected.');
-      }
-    });
-  }
-
-
   @override
   Widget build(BuildContext context) {
-    
-
-    if (salonCategoryDropdownValue == null)
-      salonCategoryDropdownValue = widget.salon.salonCategory;
-    if (salonServicesController == null || salonServicesController.length == 0)
-      salonServicesController = widget.salon.salonServices;
-    if (salonOutletController == null || salonOutletController.length == 0)
-      salonOutletController = widget.salon.salonOutlets;
-
     showOutletEditDialog(String addOrEdit, int index, bool isAdd) {
       if (isAdd == false) {
-        outletCloseTimeValue = widget.salon.salonOutlets[index].outletCloseTime;
-        outletOpenTimeValue = widget.salon.salonOutlets[index].outletOpenTime;
+        outletCloseTimeValue = salonOutletController[index].outletOpenTime;
+        outletOpenTimeValue = salonOutletController[index].outletCloseTime;
       }
 
       showDialog(
@@ -164,8 +90,7 @@ class _SalonEditDataTableState extends State<SalonEditDataTable> {
                     controller: isAdd == true
                         ? (outletAddressController..text = "")
                         : (outletAddressController
-                          ..text =
-                              widget.salon.salonOutlets[index].addressLineOne),
+                          ..text = salonOutletController[index].addressLineOne),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'You cannot leave this field empty';
@@ -184,8 +109,8 @@ class _SalonEditDataTableState extends State<SalonEditDataTable> {
                     controller: isAdd == true
                         ? (outletPhoneNumber..text = "")
                         : (outletPhoneNumber
-                          ..text = widget
-                              .salon.salonOutlets[index].outletPhoneNumber),
+                          ..text =
+                              salonOutletController[index].outletPhoneNumber),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'You cannot leave this field empty';
@@ -273,8 +198,7 @@ class _SalonEditDataTableState extends State<SalonEditDataTable> {
                               googleMapLocationURL: " ",
                               outletOpenTime: outletOpenTimeValue,
                               outletCloseTime: outletCloseTimeValue,
-                              isOutletOpen:
-                                  widget.salon.salonOutlets[index].isOutletOpen,
+                              isOutletOpen: true,
                               outletPhoneNumber: outletPhoneNumber.text,
                             );
                             if (isAdd == false) {
@@ -350,8 +274,7 @@ class _SalonEditDataTableState extends State<SalonEditDataTable> {
                     controller: isAdd == true
                         ? (serviceNameController..text = "")
                         : (serviceNameController
-                          ..text =
-                              widget.salon.salonServices[index].serviceName),
+                          ..text = salonServicesController[index].serviceName),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'You cannot leave this field empty';
@@ -370,7 +293,8 @@ class _SalonEditDataTableState extends State<SalonEditDataTable> {
                     controller: isAdd == true
                         ? (servicePriceController..text = "")
                         : (servicePriceController
-                          ..text = widget.salon.salonServices[index].serviceCost
+                          ..text = salonServicesController[index]
+                              .serviceCost
                               .toString()),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -390,8 +314,8 @@ class _SalonEditDataTableState extends State<SalonEditDataTable> {
                     controller: isAdd == true
                         ? (serviceInfoController..text = "")
                         : (serviceInfoController
-                          ..text = widget
-                              .salon.salonServices[index].serviceDescription),
+                          ..text = salonServicesController[index]
+                              .serviceDescription),
                     decoration: InputDecoration(
                       focusColor: Colors.pink[500],
                       hintText: "Head Massage with great essential oils",
@@ -407,7 +331,7 @@ class _SalonEditDataTableState extends State<SalonEditDataTable> {
                           if (updateServiceKey.currentState.validate()) {
                             SalonServices formSalonService = SalonServices(
                                 isServiceAvailable: isAdd == false
-                                    ? widget.salon.salonServices[index]
+                                    ? salonServicesController[index]
                                         .isServiceAvailable
                                     : true,
                                 serviceCost:
@@ -472,10 +396,8 @@ class _SalonEditDataTableState extends State<SalonEditDataTable> {
                   icon: Icon(Icons.save),
                   onPressed: () async {
                     if (formKey.currentState.validate()) {
-                      var updatedSalon = Salon(
-                        salonID: widget.salon.salonID,
+                      var newSalon = Salon(
                         lastUpdated: DateTime.now(),
-                        salonCoverImage: widget.salon.salonCoverImage,
                         salonName: salonNameController.text,
                         salonOwnerEmail: salonOwnerEmailController.text,
                         salonOwner: salonOwnerController.text,
@@ -485,8 +407,7 @@ class _SalonEditDataTableState extends State<SalonEditDataTable> {
                         salonOutlets: salonOutletController,
                       );
                       await CRUD()
-                          .editSalon(
-                              widget.salon, updatedSalon)
+                          .addNewSalon(newSalon)
                           .then((value) => Navigator.of(context).pop());
                       // await CRUD()
                       //     .editProduct(widget.product, updatedProduct)
@@ -508,22 +429,31 @@ class _SalonEditDataTableState extends State<SalonEditDataTable> {
                         horizontal: 16, vertical: 10),
                     child: Column(
                       children: [
-                        Container(
-                          width: 350,
-                          height: 300,
-                          child: Image.network(widget.salon.salonCoverImage),
-                        ),
-                        OutlinedButton(
-                          onPressed: () {},
-                          child: Text(
-                            "Change Salon Image",
-                            style: GoogleFonts.varelaRound(
-                                color: Colors.pink[500]),
-                          ),
-                        ),
+                        // OutlinedButton(
+                        //   onPressed: () async {
+                        //     return await uploadImageWeb(
+                        //         onSelected: (file) async {
+                        //       final dateTime = DateTime.now();
+                        //       final path = 'salonImages/$dateTime';
+                        //       fb
+                        //           .storage()
+                        //           .refFromURL('gs://hairtech-sg.appspot.com')
+                        //           .child(path)
+                        //           .put(file);
+
+                        //       setState(() {
+                        //         pathGlobal = path;
+                        //       });
+                        //     });
+                        //   },
+                        //   child: Text(
+                        //     "Change Salon Image",
+                        //     style: GoogleFonts.varelaRound(
+                        //         color: Colors.pink[500]),
+                        //   ),
+                        // ),
                         TextFormField(
-                          controller: salonNameController
-                            ..text = widget.salon.salonName,
+                          controller: salonNameController,
                           keyboardType: TextInputType.text,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
@@ -570,8 +500,7 @@ class _SalonEditDataTableState extends State<SalonEditDataTable> {
                           ),
                         ),
                         TextFormField(
-                          controller: salonOwnerController
-                            ..text = widget.salon.salonOwner,
+                          controller: salonOwnerController,
                           keyboardType: TextInputType.text,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
@@ -586,8 +515,7 @@ class _SalonEditDataTableState extends State<SalonEditDataTable> {
                           ),
                         ),
                         TextFormField(
-                          controller: salonOwnerEmailController
-                            ..text = widget.salon.salonOwnerEmail,
+                          controller: salonOwnerEmailController,
                           keyboardType: TextInputType.text,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
@@ -602,8 +530,7 @@ class _SalonEditDataTableState extends State<SalonEditDataTable> {
                           ),
                         ),
                         TextFormField(
-                          controller: salonOwnerPhoneController
-                            ..text = widget.salon.salonOwnerPhoneNumber,
+                          controller: salonOwnerPhoneController,
                           keyboardType: TextInputType.text,
                           validator: (value) {
                             if (value == null || value.isEmpty) {

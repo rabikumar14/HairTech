@@ -178,14 +178,7 @@ void addSalonToFirebase() {
         outletCloseTime: "9:00 PM",
         isOutletOpen: true,
         outletPhoneNumber: "+6585319150",
-        outletOpenDays: [
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-          "Friday",
-          "Saturday"
-        ]));
+));
   }
   for (int i = 0; i <= 25; i++) {
     salonService.add(SalonServices(

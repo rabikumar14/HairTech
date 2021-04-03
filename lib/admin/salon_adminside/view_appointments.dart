@@ -1,19 +1,25 @@
 import 'package:Beautech/admin/dev_adminside/product_edit_data.dart';
+import 'package:Beautech/models/appointment.dart';
 import 'package:Beautech/models/product.dart';
 import 'package:Beautech/models/salon.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
+
 import 'package:provider/provider.dart';
 
-class ProductDataTable extends StatefulWidget {
+class AppointmentDataTable extends StatefulWidget {
+
+  final Salon salon;
+
+  const AppointmentDataTable({Key key, this.salon}) : super(key: key);
   @override
-  _ProductDataTableState createState() => _ProductDataTableState();
+  _AppointmentDataTableState createState() => _AppointmentDataTableState();
 }
 
-class _ProductDataTableState extends State<ProductDataTable> {
+class _AppointmentDataTableState extends State<AppointmentDataTable> {
   @override
   Widget build(BuildContext context) {
-    final products = Provider.of<List<Product>>(context);
+    final appointment = Provider.of<List<Appointment>>(context);
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.only(top: 50),
@@ -31,7 +37,23 @@ class _ProductDataTableState extends State<ProductDataTable> {
                       padding: EdgeInsets.only(left: 20),
                       child: TextButton.icon(
                         label: Text(
-                          'Add New Product',
+                          'Edit Service Availablity',
+                          style: TextStyle(fontSize: 20, color: Colors.white),
+                        ),
+                        icon: Icon(
+                          Icons.add,
+                          color: Colors.white,
+                        ),
+                        style:
+                            TextButton.styleFrom(backgroundColor: Colors.blue),
+                        onPressed: () {},
+                      ),
+                    ),
+                        Container(
+                      padding: EdgeInsets.only(left: 20),
+                      child: TextButton.icon(
+                        label: Text(
+                          'Edit Outlet Availablity',
                           style: TextStyle(fontSize: 20, color: Colors.white),
                         ),
                         icon: Icon(
@@ -47,7 +69,15 @@ class _ProductDataTableState extends State<ProductDataTable> {
                         columns: <DataColumn>[
                           DataColumn(
                             label: Text(
-                              'Name',
+                              'Appointment ID',
+                              style: TextStyle(
+                                  fontStyle: FontStyle.italic,
+                                  color: Colors.pink),
+                            ),
+                          ),
+                                 DataColumn(
+                            label: Text(
+                              'Appointment Date',
                               style: TextStyle(
                                   fontStyle: FontStyle.italic,
                                   color: Colors.pink),
@@ -55,7 +85,7 @@ class _ProductDataTableState extends State<ProductDataTable> {
                           ),
                           DataColumn(
                             label: Text(
-                              'Category',
+                              'Customer Name',
                               style: TextStyle(
                                   fontStyle: FontStyle.italic,
                                   color: Colors.pink),
@@ -63,7 +93,7 @@ class _ProductDataTableState extends State<ProductDataTable> {
                           ),
                           DataColumn(
                             label: Text(
-                              'Price',
+                              'Service',
                               style: TextStyle(
                                   fontStyle: FontStyle.italic,
                                   color: Colors.pink),
@@ -71,7 +101,7 @@ class _ProductDataTableState extends State<ProductDataTable> {
                           ),
                           DataColumn(
                             label: Text(
-                              'Description',
+                              'Outlet',
                               style: TextStyle(
                                   fontStyle: FontStyle.italic,
                                   color: Colors.pink),
@@ -79,39 +109,38 @@ class _ProductDataTableState extends State<ProductDataTable> {
                           ),
                           DataColumn(
                             label: Text(
-                              'Edit Product',
+                              'Cancel Appointment',
                               style: TextStyle(
                                   fontStyle: FontStyle.italic,
                                   color: Colors.pink),
                             ),
                           ),
                         ],
-                        rows: products
+                        rows: appointment
                             .map((element) => DataRow(cells: [
-                                  DataCell(Text(element.productName)),
-                                  DataCell(
-                                    Text(element.productCategory),
+                                  DataCell(Text(element.appointmentID)),
+                                   DataCell(
+                                    Text(element.appointmentTime.toString()),
                                   ),
                                   DataCell(
-                                    Text(element.productPrice.toString()),
+                                    Text(element.appointmentUserName),
+                                  ),
+                                  DataCell(
+                                    Text(element.appointmentService),
                                   ),
                                   DataCell(
                                     Container(
                                         width: 150,
                                         child: Text(
-                                          element.productDescription,
+                                          element.appointmentSalonOutlet,
                                           maxLines: 2,
                                           overflow: TextOverflow.ellipsis,
                                         )),
                                   ),
                                   DataCell(IconButton(
-                                      icon: Icon(Icons.edit),
+                                      icon: Icon(Icons.cancel),
                                       onPressed: () {
-                                        Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    ProductEditData(
-                                                        product: element)));
+                                  
                                       })),
                                 ]))
                             .toList()),

@@ -50,7 +50,7 @@ class SalonOutlets {
   String googleMapLocationURL;
   String outletPhoneNumber;
   bool isOutletOpen;
-  List<String> outletOpenDays;
+
 
   SalonOutlets({
      this.outletID,
@@ -63,7 +63,7 @@ class SalonOutlets {
      this.googleMapLocationURL,
      this.outletPhoneNumber,
      this.isOutletOpen,
-     this.outletOpenDays,
+
   });
 
   Map<String, dynamic> toMap() {
@@ -78,7 +78,7 @@ class SalonOutlets {
       'googleMapLocationURL': googleMapLocationURL,
       'outletPhoneNumber': outletPhoneNumber,
       'isOutletOpen': isOutletOpen,
-      'outletOpenDays': outletOpenDays,
+    
     };
   }
 
@@ -94,14 +94,14 @@ class SalonOutlets {
       googleMapLocationURL: map['googleMapLocationURL'],
       outletPhoneNumber: map['outletPhoneNumber'],
       isOutletOpen: map['isOutletOpen'],
-      outletOpenDays: List<String>.from(map['outletOpenDays']),
+
     );
   }
 
   
   @override
   String toString() {
-    return 'SalonOutlets(outletID: $outletID, unitNumber: $unitNumber, postCode: $postCode, addressLineOne: $addressLineOne, addressLineTwo: $addressLineTwo, outletOpenTime: $outletOpenTime, outletCloseTime: $outletCloseTime, googleMapLocationURL: $googleMapLocationURL, outletPhoneNumber: $outletPhoneNumber, isOutletOpen: $isOutletOpen, outletOpenDays: $outletOpenDays)';
+    return 'SalonOutlets(outletID: $outletID, unitNumber: $unitNumber, postCode: $postCode, addressLineOne: $addressLineOne, addressLineTwo: $addressLineTwo, outletOpenTime: $outletOpenTime, outletCloseTime: $outletCloseTime, googleMapLocationURL: $googleMapLocationURL, outletPhoneNumber: $outletPhoneNumber, isOutletOpen: $isOutletOpen)';
   }
 
 }

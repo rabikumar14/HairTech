@@ -99,13 +99,12 @@ class _ProductDetailsState extends State<ProductDetails> {
           end: Alignment.bottomLeft,
         ),
       ),
-      child: Hero(
-        tag: widget.product.documentId,
-        child: Image.network(
-          widget.product.productImg,
-          height: 300,
+      child:    Hero(
+          tag: widget.product.documentId,
+          child: Image.network(
+            widget.product.productImg,
+          ),
         ),
-      ),
     );
   }
 

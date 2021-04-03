@@ -45,84 +45,87 @@ class _ProductPageState extends State<ProductPage> with WidgetsBindingObserver {
         : 2;
 
     return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
-      appBar: GlobalAppBar('Our Products', action: [
+        backgroundColor: Theme.of(context).backgroundColor,
+        appBar: GlobalAppBar('Our Products', action: [
 
-      ]),
-      body: DefaultTabController(
-        length: 4,
-        child: Column(
-          children: <Widget>[
-            TabBar(
-              labelColor: Theme.of(context).primaryColor,
-              unselectedLabelColor: Colors.grey,
-              labelStyle: customFont,
-              isScrollable: true,
-              indicator: UnderlineTabIndicator(
-                  borderSide: BorderSide(
-                    color: Theme.of(context).primaryColor,
-                    width: 2,
-                  ),
-                  insets: EdgeInsets.symmetric(horizontal: 45)),
-              tabs: [
-                Tab(
-                  text: 'All',
-                ),
-                Tab(
-                  text: 'Shampoo',
-                ),
-                Tab(
-                  text: 'Dyes',
-                ),
-                Tab(
-                  text: 'Conditioners',
-                ),
-              ],
-            ),
-            Expanded(
-              child: Container(
-                child: TabBarView(children: [
-                  SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        GridView.builder(
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemCount: products.length,
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: columnNeeded,
-                                  mainAxisSpacing: 10,
-                                  crossAxisSpacing: 10),
-                          itemBuilder: (BuildContext context, int index) {
-                            return ProductTile(
-                              product: products[index],
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                  GridViewProducts(
-                    products: products,
-                    category: "Shampoo",
-                    columnNeeded: columnNeeded,
-                  ),
-                  GridViewProducts(
-                      products: products,
-                      category: "Dye",
-                      columnNeeded: columnNeeded),
-                  GridViewProducts(
-                      products: products,
-                      category: "Conditioner",
-                      columnNeeded: columnNeeded),
-                ]),
+        ]),
+        body: DefaultTabController(
+    length: 4,
+    child: Column(
+      children: <Widget>[
+        TabBar(
+          labelColor: Theme.of(context).primaryColor,
+          unselectedLabelColor: Colors.grey,
+          labelStyle: customFont,
+          isScrollable: true,
+          indicator: UnderlineTabIndicator(
+              borderSide: BorderSide(
+                color: Theme.of(context).primaryColor,
+                width: 2,
               ),
+              insets: EdgeInsets.symmetric(horizontal: 45)),
+          tabs: [
+            Tab(
+              text: 'All',
+            ),
+            Tab(
+              text: 'Shampoo',
+            ),
+            Tab(
+              text: 'Dyes',
+            ),
+            Tab(
+              text: 'Conditioners',
             ),
           ],
         ),
-      ),
-    );
+        Flexible(
+                  child: Container(
+            child: TabBarView(children: [
+              SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
+                    children: [
+                      GridView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: products.length,
+                        gridDelegate:
+                            SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                mainAxisSpacing: 10,
+                                crossAxisSpacing: 10),
+                        itemBuilder: (BuildContext context, int index) {
+                          return ProductTile(
+                            product: products[index],
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              GridViewProducts(
+                products: products,
+                category: "Shampoo",
+                columnNeeded: 2,
+              ),
+              GridViewProducts(
+                  products: products,
+                  category: "Dye",
+                  columnNeeded: 2),
+              GridViewProducts(
+                  products: products,
+                  category: "Conditioner",
+                  columnNeeded: 2),
+            ]),
+          ),
+        ),
+      ],
+    ),
+        ),
+      );
   }
 }
 
@@ -157,22 +160,25 @@ class _GridViewProductsState extends State<GridViewProducts> {
       });
     }
     print(lengthOfCategoryProduct);
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          GridView.builder(
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            itemCount: productsFilter.length,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, mainAxisSpacing: 10, crossAxisSpacing: 10),
-            itemBuilder: (BuildContext context, int index) {
-              return ProductTile(
-                product: productsFilter[index],
-              );
-            },
-          ),
-        ],
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            GridView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: productsFilter.length,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2, mainAxisSpacing: 10, crossAxisSpacing: 10),
+              itemBuilder: (BuildContext context, int index) {
+                return ProductTile(
+                  product: productsFilter[index],
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

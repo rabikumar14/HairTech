@@ -40,7 +40,7 @@ class _BotNavBarState extends State<BotNavBar> {
     HomePage(),
     ProductPage(),
     CartPage(),
-  Account()
+    Account()
   ];
 
   @override
