@@ -24,7 +24,10 @@ class StreamUserData extends StatelessWidget {
   Widget build(BuildContext context) {
     final streamAppUser = Provider.of<Stream<AppUser>>(context);
     return StreamProvider<AppUser>(
-        create: (_) => CRUD().streamAppUser(FirebaseAuth.instance.currentUser.uid), initialData: null, child: widget);
+        create: (_) =>
+            CRUD().streamAppUser(FirebaseAuth.instance.currentUser.uid),
+        initialData: null,
+        child: widget);
   }
 }
 
@@ -54,11 +57,34 @@ class _HomePageState extends State<HomePage> {
     'images/brush-tool.svg',
     'images/hair-salon-situation-of-two-persons.svg'
   ];
+
+  Widget googleSignInButton() {
+    return Container(
+      padding: EdgeInsets.all(4),
+      child: TextButton.icon(
+        label: Text(
+          'Login with Google',
+          style: TextStyle(fontSize: 16, color: Colors.white),
+        ),
+        icon: Icon(
+          TablerIcons.brand_google,
+          color: Colors.white,
+        ),
+        style: TextButton.styleFrom(backgroundColor: Colors.blue),
+        onPressed: () {
+          Navigator.of(context).pop();
+          final provider =
+              Provider.of<GoogleSignInProvider>(context, listen: false);
+          provider.login();
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final salons = Provider.of<List<Salon>>(context);
- 
-      
+
     final user = FirebaseAuth.instance.currentUser;
     String appbarTitle = user == null
         ? "Welcome to BeautTech"
@@ -71,6 +97,55 @@ class _HomePageState extends State<HomePage> {
       appBar: GlobalAppBar(
         appbarTitle,
         color: Colors.pink[50],
+        isCenter: false,
+        action: user == null
+            ? [
+                Container(
+                  child: TextButton(
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Login Options',
+                                    style: TextStyle(
+                                        fontSize: 16, color: Colors.black),
+                                  ),
+                                  IconButton(
+                                      icon: Icon(Icons.close),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      }),
+                                ],
+                              ),
+                              content: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  SizedBox(
+                                      width: double.infinity,
+                                      child: googleSignInButton()),
+                                  SizedBox(height: 5),
+                                  SizedBox(
+                                      width: double.infinity,
+                                      child: EmailSignInButton()),
+                                ],
+                              ),
+                            );
+                          });
+                    },
+                    child: Text(
+                      'Login/Signup',
+                      style: TextStyle(fontSize: 14, color: Colors.pink[300]),
+                    ),
+                  ),
+                ),
+              ]
+            : [],
       ),
       backgroundColor: Theme.of(context).backgroundColor,
       body: SingleChildScrollView(
@@ -113,14 +188,14 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             SizedBox(height: 15),
-            if (FirebaseAuth.instance.currentUser == null)
-              Center(
-                  child: Padding(
-                padding: const EdgeInsets.only(bottom: 15, left: 10, right: 10),
-                child: GoogleSignupButtonWidget(),
-              ))
-            else
-              Container(),
+            // if (FirebaseAuth.instance.currentUser == null)
+            //   Center(
+            //       child: Padding(
+            //     padding: const EdgeInsets.only(bottom: 15, left: 10, right: 10),
+            //     child: GoogleSignupButtonWidget(),
+            //   ))
+            // else
+            //   Container(),
             // Padding(
             //   padding: const EdgeInsets.only(bottom: 15, left: 10, right: 10),
             //   child: TextButton.icon(
@@ -134,28 +209,28 @@ class _HomePageState extends State<HomePage> {
             //     ),
             //     style: TextButton.styleFrom(backgroundColor: Colors.blue),
             //     onPressed: () async {
-             
-            //       //         print("ahafafafafafa");
-            //       final HttpsCallable callable =
-            //           CloudFunctions.instance.getHttpsCallable(
-            //         functionName: 'createAutomaticPaymentIntentHandler',
-            //       );
-            //       //         var document = await FirebaseFirestore.instance
-            //       //             .collection('user')
-            //       //             .doc(user.uid)
-            //       //             .get();
-            //       final response = await callable.call({'amount': 10000});
-            //       final result = await Stripe.instance.confirmPayment(
-            //           response.data["clientSecret"],
-            //           paymentMethodId: 'pm_card_threeDSecure2Required');
-            //       if (result['status'] == 'succeeded') {
-            //         // TODO: success
-            //         debugPrint('Success after authentication.');
-            //         return;
-            //       } else {
-            //         debugPrint('Error');
-            //       }
-            //       // addSalonToFirebase();
+
+            //       // //         print("ahafafafafafa");
+            //       // final HttpsCallable callable =
+            //       //     CloudFunctions.instance.getHttpsCallable(
+            //       //   functionName: 'createAutomaticPaymentIntentHandler',
+            //       // );
+            //       // //         var document = await FirebaseFirestore.instance
+            //       // //             .collection('user')
+            //       // //             .doc(user.uid)
+            //       // //             .get();
+            //       // final response = await callable.call({'amount': 10000});
+            //       // final result = await Stripe.instance.confirmPayment(
+            //       //     response.data["clientSecret"],
+            //       //     paymentMethodId: 'pm_card_threeDSecure2Required');
+            //       // if (result['status'] == 'succeeded') {
+            //       //   // TODO: success
+            //       //   debugPrint('Success after authentication.');
+            //       //   return;
+            //       // } else {
+            //       //   debugPrint('Error');
+            //       // }
+            //       addSalonToFirebase();
             //     },
             //   ),
             // ),
@@ -190,24 +265,22 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class GoogleSignupButtonWidget extends StatelessWidget {
+class EmailSignInButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Container(
         padding: EdgeInsets.all(4),
         child: TextButton.icon(
           label: Text(
-            'Login with Google',
-            style: TextStyle(fontSize: 20, color: Colors.white),
+            'Admin Login',
+            style: TextStyle(fontSize: 16, color: Colors.white),
           ),
           icon: Icon(
-            TablerIcons.brand_google,
+            TablerIcons.login,
             color: Colors.white,
           ),
-          style: TextButton.styleFrom(backgroundColor: Colors.blue),
+          style: TextButton.styleFrom(backgroundColor: Colors.pink[500]),
           onPressed: () {
-            final provider =
-                Provider.of<GoogleSignInProvider>(context, listen: false);
-            provider.login();
+           Navigator.pushNamed(context, "login");
           },
         ),
       );

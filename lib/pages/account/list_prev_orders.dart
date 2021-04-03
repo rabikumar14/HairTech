@@ -22,8 +22,11 @@ class _ListOrdersState extends State<ListOrders> {
   Widget build(BuildContext context) {
     final orders = Provider.of<List<ProductOrder>>(context);
     return Scaffold(
-      appBar: GlobalAppBar("Your orders"),
-      body: ListView.builder(
+      appBar: GlobalAppBar("Your orders",elevation: 4),
+      body: 
+      
+      
+     orders.length > 0 ? ListView.builder(
           shrinkWrap: true,
           itemCount: orders.length,
           itemBuilder: (BuildContext context, int index) {
@@ -35,7 +38,17 @@ class _ListOrdersState extends State<ListOrders> {
             } else {
             return  Container();
             }
-          }),
+          }) : Center(
+            child: Text(
+              'No purchases yet!',
+              style: GoogleFonts.varelaRound(
+                color: Colors.black,
+                fontSize: 15,
+                fontWeight: FontWeight.w500,
+              ),
+              maxLines: 2,
+            ),
+          ),
     );
   }
 }

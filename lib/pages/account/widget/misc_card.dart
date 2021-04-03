@@ -1,6 +1,8 @@
 
 
 import 'package:Beautech/global/widget_export.dart';
+import 'package:Beautech/pages/account/widget/faq.dart';
+import 'package:Beautech/pages/account/widget/terms_and_condition.dart';
 import 'package:flutter/material.dart';
 
 class MiscCard extends StatelessWidget {
@@ -22,7 +24,10 @@ class MiscCard extends StatelessWidget {
               ),
               title:
                   textFont('Terms & Conditions', Theme.of(context).accentColor, fontSize: 14),
-              onTap: () {},
+              onTap: () {   Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) =>TermsAndConditions()),
+              );},
             ),
             CustomDivider(),
             ListTile(
@@ -30,8 +35,11 @@ class MiscCard extends StatelessWidget {
                 Icons.supervised_user_circle_sharp,
               ),
               title:
-                  textFont('Development Team', Theme.of(context).accentColor, fontSize: 14),
-              onTap: () {},
+                  textFont('FAQ', Theme.of(context).accentColor, fontSize: 14),
+              onTap: () {Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) =>FAQ()),
+              );}
             ),
           ],
         ),

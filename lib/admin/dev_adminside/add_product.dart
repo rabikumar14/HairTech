@@ -4,15 +4,15 @@ import 'package:Beautech/models/product.dart';
 import 'package:Beautech/services/crud_model.dart';
 import 'package:flutter/material.dart';
 
-class ProductEditData extends StatefulWidget {
+class AddNewProduct extends StatefulWidget {
   final Product product;
 
-  const ProductEditData({Key key, this.product}) : super(key: key);
+  const AddNewProduct({Key key, this.product}) : super(key: key);
   @override
-  _ProductEditDataState createState() => _ProductEditDataState();
+  _AddNewProductState createState() => _AddNewProductState();
 }
 
-class _ProductEditDataState extends State<ProductEditData> {
+class _AddNewProductState extends State<AddNewProduct> {
   final formKey = GlobalKey<FormState>();
   TextEditingController productNameController = new TextEditingController();
   TextEditingController productPriceController = new TextEditingController();
@@ -26,14 +26,12 @@ class _ProductEditDataState extends State<ProductEditData> {
 
   @override
   Widget build(BuildContext context) {
-    if (productCategoryDropdownValue == null)
-      productCategoryDropdownValue = widget.product.productCategory;
 
     return Form(
       key: formKey,
       child: Scaffold(
           appBar: GlobalAppBar(
-            "Edit Product",
+            "Add Product",
             color: Colors.white,
             elevation: 5,
             action: [
@@ -42,11 +40,10 @@ class _ProductEditDataState extends State<ProductEditData> {
                   onPressed: () async {
                     if (formKey.currentState.validate()) {
                       var updatedProduct = Product(
-                          productImg: widget.product.productImg,
+                          
                           qty: 1,
                           productStock: 100,
-                          
-                          documentId: widget.product.documentId,
+                        
                           productCategory: productCategoryDropdownValue,
                           productName: productNameController.text,
                           productPrice:
@@ -88,7 +85,7 @@ class _ProductEditDataState extends State<ProductEditData> {
                           ),
                           TextFormField(
                             controller: productNameController
-                              ..text = widget.product.productName,
+                             ,
                             keyboardType: TextInputType.text,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
@@ -112,7 +109,7 @@ class _ProductEditDataState extends State<ProductEditData> {
                                 width: 200,
                                 child: TextFormField(
                                   controller: productPriceController
-                                    ..text = widget.product.productPrice.toString(),
+                                  ,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
                                       return 'You cannot leave this field empty';
@@ -166,7 +163,7 @@ class _ProductEditDataState extends State<ProductEditData> {
                           SizedBox(height: 15),
                           TextFormField(
                             controller: productDescriptionController
-                              ..text = widget.product.productDescription.toString(),
+                            ,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'You cannot leave this field empty';
