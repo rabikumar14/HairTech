@@ -122,6 +122,10 @@ class _AppointmentDataTableState extends State<AppointmentDataTable> {
                                    DataCell(
                                     Text(element.appointmentTime.toString()),
                                   ),
+
+                                        DataCell(
+                                    Text(element.appointmentTime.toString()),
+                                  ),
                                   DataCell(
                                     Text(element.appointmentUserName),
                                   ),

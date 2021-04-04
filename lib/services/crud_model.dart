@@ -1,3 +1,4 @@
+import 'package:Beautech/admin/dev_adminside/add_product.dart';
 import 'package:Beautech/models/appointment.dart';
 import 'package:Beautech/models/order.dart';
 import 'package:Beautech/models/product.dart';
@@ -73,9 +74,39 @@ class CRUD {
   }
 
 
+
+  Future addNewProduct(Product product) async {
+    await FirebaseFirestore.instance
+        .collection('products')
+        .add(product.toMap())
+        .then((value) {
+      FirebaseFirestore.instance
+          .collection('products')
+          .doc(value.id)
+          .update(
+        {'documentId': value.id},
+      );
+    });
+  }
+
   Future updateService(List<SalonServices> salonService, String salonID) async {
     var services = [];
    salonService.forEach((element) { services.add(element.toMap()) ;});
+    await FirebaseFirestore.instance.collection("salons").doc(salonID).update({
+      'salonServices': services,
+    });
+  }
+
+
+
+
+    Future updateServiceStatus(List<SalonServices> salonService, String salonID) async {
+    var services = [];
+
+
+
+
+    salonService.forEach((element) { services.add(element.toMap()) ;});
     await FirebaseFirestore.instance.collection("salons").doc(salonID).update({
       'salonServices': services,
     });

@@ -1,3 +1,4 @@
+import 'package:Beautech/admin/dev_adminside/add_product.dart';
 import 'package:Beautech/admin/dev_adminside/product_edit_data.dart';
 import 'package:Beautech/models/product.dart';
 import 'package:Beautech/models/salon.dart';
@@ -40,7 +41,11 @@ class _ProductDataTableState extends State<ProductDataTable> {
                         ),
                         style:
                             TextButton.styleFrom(backgroundColor: Colors.blue),
-                        onPressed: () {},
+                        onPressed: () {
+
+
+                             Navigator.of(context).push(MaterialPageRoute(builder:  (context)=> AddNewProduct()));
+                        },
                       ),
                     ),
                     DataTable(

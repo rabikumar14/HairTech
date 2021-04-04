@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:Beautech/global/package_export.dart';
 import 'package:Beautech/global/widget_export.dart';
 
@@ -5,9 +7,11 @@ import 'package:Beautech/models/salon.dart';
 import 'package:Beautech/services/crud_model.dart';
 
 import 'package:Beautech/services/firebase_storage.dart';
+import 'package:Beautech/services/uploadImage.dart';
 import 'package:flutter/foundation.dart';
 
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class AddNewSalon extends StatefulWidget {
   const AddNewSalon({Key key}) : super(key: key);
@@ -58,6 +62,20 @@ class _AddNewSalonState extends State<AddNewSalon> {
     "8:00 PM",
     "9:00 PM"
   ];
+
+  File _image;
+  final picker = ImagePicker();
+
+  Future getImageFromGallery() async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    setState(() {
+      if (pickedFile != null) {
+        _image = File(pickedFile.path);
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -396,6 +414,7 @@ class _AddNewSalonState extends State<AddNewSalon> {
                   icon: Icon(Icons.save),
                   onPressed: () async {
                     if (formKey.currentState.validate()) {
+                            String img  =  await uploadNewImage(_image.path);
                       var newSalon = Salon(
                         lastUpdated: DateTime.now(),
                         salonName: salonNameController.text,
@@ -403,6 +422,7 @@ class _AddNewSalonState extends State<AddNewSalon> {
                         salonOwner: salonOwnerController.text,
                         salonCategory: salonCategoryDropdownValue,
                         salonOwnerPhoneNumber: salonOwnerPhoneController.text,
+                        salonCoverImage: img,
                         salonServices: salonServicesController,
                         salonOutlets: salonOutletController,
                       );
@@ -429,29 +449,23 @@ class _AddNewSalonState extends State<AddNewSalon> {
                         horizontal: 16, vertical: 10),
                     child: Column(
                       children: [
-                        // OutlinedButton(
-                        //   onPressed: () async {
-                        //     return await uploadImageWeb(
-                        //         onSelected: (file) async {
-                        //       final dateTime = DateTime.now();
-                        //       final path = 'salonImages/$dateTime';
-                        //       fb
-                        //           .storage()
-                        //           .refFromURL('gs://hairtech-sg.appspot.com')
-                        //           .child(path)
-                        //           .put(file);
-
-                        //       setState(() {
-                        //         pathGlobal = path;
-                        //       });
-                        //     });
-                        //   },
-                        //   child: Text(
-                        //     "Change Salon Image",
-                        //     style: GoogleFonts.varelaRound(
-                        //         color: Colors.pink[500]),
-                        //   ),
-                        // ),
+                        _image != null
+                            ? Container(
+                                width: 350,
+                                height: 300,
+                                child: Image.file(_image),
+                              )
+                            : Container(),
+                        OutlinedButton(
+                          onPressed: () async {
+                            await getImageFromGallery();
+                          },
+                          child: Text(
+                            "Change Salon Image",
+                            style: GoogleFonts.varelaRound(
+                                color: Colors.pink[500]),
+                          ),
+                        ),
                         TextFormField(
                           controller: salonNameController,
                           keyboardType: TextInputType.text,
