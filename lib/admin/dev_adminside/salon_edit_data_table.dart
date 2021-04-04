@@ -5,6 +5,7 @@ import 'package:Beautech/global/widget_export.dart';
 import 'package:Beautech/models/product.dart';
 import 'package:Beautech/models/salon.dart';
 import 'package:Beautech/services/crud_model.dart';
+import 'package:Beautech/services/uploadImage.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -65,38 +66,33 @@ class _SalonEditDataTableState extends State<SalonEditDataTable> {
   File _image;
   final picker = ImagePicker();
 
+  uploadProfileImage(String imageFile) async {
+    //Check Permissions
+    await Permission.photos.request();
 
-    uploadProfileImage(String imageFile) async {
-      //Check Permissions
-      await Permission.photos.request();
+    var permissionStatus = await Permission.photos.status;
 
-      var permissionStatus = await Permission.photos.status;
+    if (permissionStatus.isGranted) {
+      //Select Image
+      var file = File(imageFile);
 
-      if (permissionStatus.isGranted) {
-        //Select Image
-        var file = File(imageFile);
+      if (imageFile != null) {
+        //Upload to Firebase
+        var snapshot = await FirebaseStorage.instance
+            .ref()
+            .child('folderNames/' +
+                imageFile.substring(imageFile.lastIndexOf('/')))
+            .putFile(file)
+            .whenComplete(() => null);
 
-        if (imageFile != null) {
-          //Upload to Firebase
-          var snapshot = await FirebaseStorage.instance
-              .ref()
-              .child('folderNames/' +
-              imageFile.substring(imageFile.lastIndexOf('/')))
-              .putFile(file)
-              .whenComplete(() => null);
-
-          var downloadUrl = await snapshot.ref.getDownloadURL();
-
-    
-        } else {
-          print('No Path Received');
-        }
+        var downloadUrl = await snapshot.ref.getDownloadURL();
       } else {
-        print('Grant Permissions and try again');
+        print('No Path Received');
       }
+    } else {
+      print('Grant Permissions and try again');
     }
-
-
+  }
 
   Future getImageFromCamera() async {
     final pickedFile = await picker.getImage(source: ImageSource.camera);
@@ -104,7 +100,6 @@ class _SalonEditDataTableState extends State<SalonEditDataTable> {
     setState(() {
       if (pickedFile != null) {
         _image = File(pickedFile.path);
-
       } else {
         print('No image selected.');
       }
@@ -123,11 +118,8 @@ class _SalonEditDataTableState extends State<SalonEditDataTable> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
-    
-
     if (salonCategoryDropdownValue == null)
       salonCategoryDropdownValue = widget.salon.salonCategory;
     if (salonServicesController == null || salonServicesController.length == 0)
@@ -472,10 +464,17 @@ class _SalonEditDataTableState extends State<SalonEditDataTable> {
                   icon: Icon(Icons.save),
                   onPressed: () async {
                     if (formKey.currentState.validate()) {
+                       String img  ;
+
+                      if(_image != null)
+                      {
+                      img  =  await uploadNewImage(_image.path);
+                      }
+                          
                       var updatedSalon = Salon(
                         salonID: widget.salon.salonID,
                         lastUpdated: DateTime.now(),
-                        salonCoverImage: widget.salon.salonCoverImage,
+                        salonCoverImage:  _image == null ?  widget.salon.salonCoverImage : img,
                         salonName: salonNameController.text,
                         salonOwnerEmail: salonOwnerEmailController.text,
                         salonOwner: salonOwnerController.text,
@@ -483,10 +482,10 @@ class _SalonEditDataTableState extends State<SalonEditDataTable> {
                         salonOwnerPhoneNumber: salonOwnerPhoneController.text,
                         salonServices: salonServicesController,
                         salonOutlets: salonOutletController,
+                        
                       );
                       await CRUD()
-                          .editSalon(
-                              widget.salon, updatedSalon)
+                          .editSalon(widget.salon, updatedSalon)
                           .then((value) => Navigator.of(context).pop());
                       // await CRUD()
                       //     .editProduct(widget.product, updatedProduct)
@@ -511,7 +510,9 @@ class _SalonEditDataTableState extends State<SalonEditDataTable> {
                         Container(
                           width: 350,
                           height: 300,
-                          child: Image.network(widget.salon.salonCoverImage),
+                          child: _image == null
+                              ? Image.network(widget.salon.salonCoverImage)
+                              : Image.file(_image),
                         ),
                         OutlinedButton(
                           onPressed: () {},
