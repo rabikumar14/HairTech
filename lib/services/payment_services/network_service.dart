@@ -50,6 +50,16 @@ class NetworkService {
   
   }
 
+
+   Future updateUserNewUser(User user, String name) async {
+    var document =
+        await FirebaseFirestore.instance.collection('user').doc(user.uid).get();
+    await _call('updateUser',
+        {'name': "name", 'customer': document.data()['stripeId']});
+
+  
+  }
+
   Future<IntentResponse> refundPayment(String charge) async {
     final params = {
       'charge': charge,

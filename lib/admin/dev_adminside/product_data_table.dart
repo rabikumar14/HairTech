@@ -23,32 +23,29 @@ class _ProductDataTableState extends State<ProductDataTable> {
             isAlwaysShown: true,
             child: SingleChildScrollView(
               scrollDirection: Axis.vertical,
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      padding: EdgeInsets.only(left: 20),
-                      child: TextButton.icon(
-                        label: Text(
-                          'Add New Product',
-                          style: TextStyle(fontSize: 20, color: Colors.white),
-                        ),
-                        icon: Icon(
-                          Icons.add,
-                          color: Colors.white,
-                        ),
-                        style:
-                            TextButton.styleFrom(backgroundColor: Colors.blue),
-                        onPressed: () {
-
-
-                             Navigator.of(context).push(MaterialPageRoute(builder:  (context)=> AddNewProduct()));
-                        },
+              child: Column(
+                children: [
+                  Container(
+                    padding: EdgeInsets.only(left: 20),
+                    child: TextButton.icon(
+                      label: Text(
+                        'Add New Product',
+                        style: TextStyle(fontSize: 20, color: Colors.white),
                       ),
+                      icon: Icon(
+                        Icons.add,
+                        color: Colors.white,
+                      ),
+                      style: TextButton.styleFrom(backgroundColor: Colors.blue),
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => AddNewProduct()));
+                      },
                     ),
-                    DataTable(
+                  ),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: DataTable(
                         columns: <DataColumn>[
                           DataColumn(
                             label: Text(
@@ -120,8 +117,8 @@ class _ProductDataTableState extends State<ProductDataTable> {
                                       })),
                                 ]))
                             .toList()),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),

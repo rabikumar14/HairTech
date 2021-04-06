@@ -19,7 +19,6 @@ export async function setupUserHandler(user: UserRecord) {
     stripeId: customer.id,
     appUserName: user.displayName,
     appUserEmail: user.email,
-    appUseePhoneNumber: user.phoneNumber,
     appUserProfilePic: user.photoURL,
   }, {merge: true});
 }

@@ -5,15 +5,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class AppointmentDataTable extends StatefulWidget {
-  final Salon salon;
+class ServicesDataTable extends StatefulWidget {
 
-  const AppointmentDataTable({Key key, this.salon}) : super(key: key);
+
+  const ServicesDataTable({Key key}) : super(key: key);
   @override
-  _AppointmentDataTableState createState() => _AppointmentDataTableState();
+  _ServicesDataTableState createState() => _ServicesDataTableState();
 }
 
-class _AppointmentDataTableState extends State<AppointmentDataTable> {
+class _ServicesDataTableState extends State<ServicesDataTable> {
   @override
   Widget build(BuildContext context) {
     final salons = Provider.of<List<Salon>>(context);
@@ -36,7 +36,7 @@ class _AppointmentDataTableState extends State<AppointmentDataTable> {
           serviceName: element.serviceName);
     }
 
-    List<SalonServices> services = widget.salon.salonServices;
+    List<SalonServices> services = mySalon.salonServices;
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.only(top: 50),
@@ -120,7 +120,7 @@ class _AppointmentDataTableState extends State<AppointmentDataTable> {
                                             returnChangedBoolValue(
                                                 false, element);
                                         CRUD().updateService(
-                                            services, widget.salon.salonID);
+                                            services, mySalon.salonID);
                                         setState(() {});
                                       },
                                     ))
@@ -133,7 +133,7 @@ class _AppointmentDataTableState extends State<AppointmentDataTable> {
                                             returnChangedBoolValue(
                                                 true, element);
                                         CRUD().updateService(
-                                            services, widget.salon.salonID);
+                                            services, mySalon.salonID);
 
                                         setState(() {});
                                       },

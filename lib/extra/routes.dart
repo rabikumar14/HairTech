@@ -1,6 +1,8 @@
 
 import 'package:Beautech/admin/admin_sign_in.dart';
+import 'package:Beautech/extra/auth_wrappers.dart';
 import 'package:Beautech/global/nav_rail/nav_rail.dart';
+import 'package:Beautech/global/nav_rail/nav_rail_dev.dart';
 import 'package:Beautech/pages/home/homepage.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +25,7 @@ class RouterFluro {
 
   static var sideNavRailHandler =
       Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
-    return SideNavRail();
+    return AuthWrapper();
   });
 
   static void defineRoutes() {
