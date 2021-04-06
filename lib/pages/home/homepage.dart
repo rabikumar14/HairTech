@@ -95,7 +95,17 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       appBar: GlobalAppBar(
+        
         appbarTitle,
+        leading:  Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: CircleAvatar(
+                    radius: 26.0,
+                    backgroundImage:
+                        NetworkImage("https://firebasestorage.googleapis.com/v0/b/hairtech-sg.appspot.com/o/beautechapp.png?alt=media&token=1756f7e7-f45f-4f6a-94c1-7cfe30e9c344"),
+                    backgroundColor: Colors.transparent,
+                  ),
+        ),
         color: Colors.pink[50],
         isCenter: false,
         action: user == null
