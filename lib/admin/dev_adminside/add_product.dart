@@ -10,9 +10,9 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AddNewProduct extends StatefulWidget {
-  final Product product;
+  
 
-  const AddNewProduct({Key key, this.product}) : super(key: key);
+
   @override
   _AddNewProductState createState() => _AddNewProductState();
 }

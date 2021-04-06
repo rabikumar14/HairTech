@@ -104,8 +104,6 @@ class _ProductEditDataState extends State<ProductEditData> {
                       child: SingleChildScrollView(
                         child: Column(
                           children: [
-
-                        
                             Container(
                               width: 350,
                               height: 300,

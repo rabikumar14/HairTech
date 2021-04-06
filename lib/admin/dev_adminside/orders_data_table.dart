@@ -1,5 +1,7 @@
 import 'package:Beautech/admin/dev_adminside/product_edit_data.dart';
-import 'package:Beautech/models/appointment.dart';
+
+import 'package:Beautech/models/export_models.dart';
+import 'package:Beautech/models/order.dart';
 import 'package:Beautech/models/product.dart';
 import 'package:Beautech/models/salon.dart';
 import 'package:Beautech/services/export_services.dart';
@@ -8,32 +10,20 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
-class AppointmentDataTable extends StatefulWidget {
+class ProductOrderDataTable extends StatefulWidget {
   final Salon salon;
 
-  const AppointmentDataTable({Key key, this.salon}) : super(key: key);
+  const ProductOrderDataTable({Key key, this.salon}) : super(key: key);
   @override
-  _AppointmentDataTableState createState() => _AppointmentDataTableState();
+  _ProductOrderDataTableState createState() => _ProductOrderDataTableState();
 }
 
-class _AppointmentDataTableState extends State<AppointmentDataTable> {
+class _ProductOrderDataTableState extends State<ProductOrderDataTable> {
   bool sort = false;
   @override
   Widget build(BuildContext context) {
-    List<Appointment> appointment = Provider.of<List<Appointment>>(context);
-    List<Appointment> listAppointment;
-
-    onSortColum(int columnIndex, bool ascending) {
-      if (columnIndex == 0) {
-        if (ascending) {
-          appointment
-              .sort((a, b) => a.appointmentTime.compareTo(b.appointmentTime));
-        } else {
-          appointment
-              .sort((a, b) => b.appointmentTime.compareTo(a.appointmentTime));
-        }
-      }
-    }
+    List<ProductOrder> productOrder = Provider.of<List<ProductOrder>>(context);
+    List<ProductOrder> listProductOrder;
 
     return Scaffold(
       body: Padding(
@@ -53,21 +43,8 @@ class _AppointmentDataTableState extends State<AppointmentDataTable> {
                         sortAscending: sort,
                         columns: <DataColumn>[
                           DataColumn(
-                              label: Text(
-                                'Appointment Date',
-                                style: TextStyle(
-                                    fontStyle: FontStyle.italic,
-                                    color: Colors.pink),
-                              ),
-                              onSort: (columnIndex, ascending) {
-                                setState(() {
-                                  sort = !sort;
-                                });
-                                onSortColum(columnIndex, ascending);
-                              }),
-                          DataColumn(
                             label: Text(
-                              'Customer Name',
+                              'Order Id',
                               style: TextStyle(
                                   fontStyle: FontStyle.italic,
                                   color: Colors.pink),
@@ -75,7 +52,7 @@ class _AppointmentDataTableState extends State<AppointmentDataTable> {
                           ),
                           DataColumn(
                             label: Text(
-                              'Service',
+                              'Address',
                               style: TextStyle(
                                   fontStyle: FontStyle.italic,
                                   color: Colors.pink),
@@ -83,7 +60,15 @@ class _AppointmentDataTableState extends State<AppointmentDataTable> {
                           ),
                           DataColumn(
                             label: Text(
-                              'Outlet',
+                              'Cost',
+                              style: TextStyle(
+                                  fontStyle: FontStyle.italic,
+                                  color: Colors.pink),
+                            ),
+                          ),
+                          DataColumn(
+                            label: Text(
+                              'Items Ordered',
                               style: TextStyle(
                                   fontStyle: FontStyle.italic,
                                   color: Colors.pink),
@@ -99,64 +84,58 @@ class _AppointmentDataTableState extends State<AppointmentDataTable> {
                           ),
                           DataColumn(
                             label: Text(
-                              'Appointment status',
+                              'Change Status',
                               style: TextStyle(
                                   fontStyle: FontStyle.italic,
                                   color: Colors.pink),
                             ),
                           ),
                         ],
-                        rows: appointment
+                        rows: productOrder
                             .map((element) => DataRow(cells: [
                                   DataCell(
-                                    Text(element.appointmentTime
-                                        .toString()
-                                        .substring(
-                                            0,
-                                            element.appointmentTime
-                                                .toString()
-                                                .lastIndexOf(":"))),
+                                    Text(element.orderId.toString()),
                                   ),
                                   DataCell(
-                                    Text(element.appointmentUserName),
+                                    Text(element.address),
                                   ),
                                   DataCell(
-                                    Text(element.appointmentService),
+                                    Text("\$" + element.orderTotal.toString()),
                                   ),
                                   DataCell(
                                     Container(
-                                        width: 150,
+                                        width: 300,
                                         child: Text(
-                                          element.appointmentSalonOutlet,
-                                          maxLines: 2,
+                                          element.itemsOrdered.toString(),
+                                          maxLines: 4,
                                           overflow: TextOverflow.ellipsis,
                                         )),
                                   ),
                                   DataCell(
-                                    Text(element.appointmentStatus),
+                                    Text(element.status),
                                   ),
                                   DataCell(Row(
                                     children: [
                                       OutlinedButton(
                                           onPressed: () {
-                                            CRUD().updateAppointment("Completed",
-                                                element.appointmentID);
+                                            CRUD().updateOrder(
+                                                "Completed", element.orderId);
                                             setState(() {});
                                           },
                                           child: Text("Mark Completed")),
                                       SizedBox(width: 10),
                                       OutlinedButton(
                                           onPressed: () {
-                                            CRUD().updateAppointment("Cancelled",
-                                                element.appointmentID);
+                                            CRUD().updateOrder(
+                                                "Cancelled", element.orderId);
                                             setState(() {});
                                           },
                                           child: Text("Cancel & Refund")),
                                       SizedBox(width: 10),
                                       OutlinedButton(
                                           onPressed: () {
-                                            CRUD().updateAppointment("Active",
-                                                element.appointmentID);
+                                            CRUD().updateOrder(
+                                                "Active", element.orderId);
                                             setState(() {});
                                           },
                                           child: Text("Mark Active"))

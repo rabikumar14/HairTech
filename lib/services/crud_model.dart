@@ -22,6 +22,15 @@ class CRUD {
         .set(newAppUser.toMap(), SetOptions(merge: true));
   }
 
+
+  Future updateUserName(String id, String newAppUser) async {
+    await FirebaseFirestore.instance
+        .collection('user')
+        .doc(id)
+        .update({
+      'appUserName': newAppUser
+    });
+  }
   Stream<AppUser> userData(String uid) {
     return FirebaseFirestore.instance.doc('user/$uid').snapshots().map((doc) {
       return AppUser.fromDocument(doc);
@@ -45,6 +54,7 @@ class CRUD {
         .doc(oldSalon.salonID)
         .update(updatedSalon.toMap());
   }
+
   Future addNewAppointment(Appointment appointment) async {
     await FirebaseFirestore.instance
         .collection('appointments')
@@ -59,31 +69,23 @@ class CRUD {
     });
   }
 
-    Future addNewSalon(Salon salon) async {
+  Future addNewSalon(Salon salon) async {
     await FirebaseFirestore.instance
         .collection('salons')
         .add(salon.toMap())
         .then((value) {
-      FirebaseFirestore.instance
-          .collection('salons')
-          .doc(value.id)
-          .update(
+      FirebaseFirestore.instance.collection('salons').doc(value.id).update(
         {'salonID': value.id},
       );
     });
   }
-
-
 
   Future addNewProduct(Product product) async {
     await FirebaseFirestore.instance
         .collection('products')
         .add(product.toMap())
         .then((value) {
-      FirebaseFirestore.instance
-          .collection('products')
-          .doc(value.id)
-          .update(
+      FirebaseFirestore.instance.collection('products').doc(value.id).update(
         {'documentId': value.id},
       );
     });
@@ -91,28 +93,54 @@ class CRUD {
 
   Future updateService(List<SalonServices> salonService, String salonID) async {
     var services = [];
-   salonService.forEach((element) { services.add(element.toMap()) ;});
+    salonService.forEach((element) {
+      services.add(element.toMap());
+    });
     await FirebaseFirestore.instance.collection("salons").doc(salonID).update({
       'salonServices': services,
     });
   }
 
+  Future updateAppointment(String statusChange, String appointmentID) async {
+    await FirebaseFirestore.instance
+        .collection("appointments")
+        .doc(appointmentID)
+        .update({
+      'appointmentStatus': statusChange,
+    });
+  }
+
+    Future updateOrder(String statusChange, String orderID) async {
+    await FirebaseFirestore.instance
+        .collection("orders")
+        .doc(orderID)
+        .update({
+      'status': statusChange,
+    });
+  }
 
 
+  Future updateOutlet(List<SalonOutlets> salonOutlets, String salonID) async {
+    var outlets = [];
+    salonOutlets.forEach((element) {
+      outlets.add(element.toMap());
+    });
+    await FirebaseFirestore.instance.collection("salons").doc(salonID).update({
+      'salonOutlets': outlets,
+    });
+  }
 
-    Future updateServiceStatus(List<SalonServices> salonService, String salonID) async {
+  Future updateServiceStatus(
+      List<SalonServices> salonService, String salonID) async {
     var services = [];
 
-
-
-
-    salonService.forEach((element) { services.add(element.toMap()) ;});
+    salonService.forEach((element) {
+      services.add(element.toMap());
+    });
     await FirebaseFirestore.instance.collection("salons").doc(salonID).update({
       'salonServices': services,
     });
   }
-
-
 
   Stream<AppUser> streamAppUser(String id) {
     return FirebaseFirestore.instance

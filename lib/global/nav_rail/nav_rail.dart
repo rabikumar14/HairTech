@@ -1,5 +1,8 @@
+import 'package:Beautech/admin/dev_adminside/add_new_user.dart';
 import 'package:Beautech/admin/dev_adminside/product_data_table.dart';
 import 'package:Beautech/admin/dev_adminside/salon_data_table.dart';
+import 'package:Beautech/admin/salon_adminside/view_appointments.dart';
+import 'package:Beautech/admin/salon_adminside/view_services.dart';
 import 'package:Beautech/global/breakpoints.dart';
 import 'package:Beautech/pages/account/account_page.dart';
 import 'package:Beautech/pages/appointment/appt_page.dart';
@@ -22,8 +25,8 @@ class _SideNavRailState extends State<SideNavRail> {
   int _selectedIndex = 0;
 
   List<Widget> pages = [
-    ProductDataTable(),
-    SalonDataTable(),
+    AddNewUser(),
+    AppointmentDataTable(),
   ];
 
   @override
