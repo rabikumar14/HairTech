@@ -8,6 +8,7 @@ class GlobalAppBar extends StatelessWidget with PreferredSizeWidget {
   final List<Widget> action;
   final bool isCenter;
   final double elevation;
+  final Widget leading;
 
   final Color color;
 
@@ -15,12 +16,13 @@ class GlobalAppBar extends StatelessWidget with PreferredSizeWidget {
     this.title, {
     this.action,
     Key key,
-    this.color, this.isCenter, this.elevation,
+    this.color, this.isCenter, this.elevation, this.leading,
   })  : preferredSize = Size.fromHeight(56),
         super(key: key);
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      leading: leading == null ? null :leading,
       elevation: elevation == null ? 0 : elevation,
       backgroundColor:
           color != null ? color : Theme.of(context).backgroundColor,

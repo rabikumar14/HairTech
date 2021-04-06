@@ -72,7 +72,7 @@ class _AddNewProductState extends State<AddNewProduct> {
                           productCategory: productCategoryDropdownValue,
                           productName: productNameController.text,
                           productPrice:
-                              double.parse(productPriceController.text),
+                            double.parse  (double.parse(productPriceController.text).toStringAsFixed(2)),
                           productDescription:
                               productDescriptionController.text);
                       await CRUD()
